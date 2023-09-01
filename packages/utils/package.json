@@ -1,0 +1,11 @@
+{
+  "name": "@dudykr/utils",
+  "private": true,
+  "version": "1.0.0",
+  "sideEffects": false,
+  "scripts": {},
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.5.0",
+    "typescript": "5.1.6"
+  }
+}
