@@ -1,0 +1,23 @@
+.next
+.yarn/
+node_modules
+.DS_Store
+.env
+# custom binaries
+.bin
+# Turbo
+.turbo
+
+# Docker data
+/.docker-data/*
+!/.docker-data/.gitkeep
+
+# We use custom path for prisma
+prisma.generated/
+
+# Prevent CLI tools from adding these files automatically
+package-lock.json
+yarn/lock
+
+
+*.tsbuildinfo

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "topo": {
+      "dependsOn": ["^topo"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "test": {
+      "cache": false,
+      "persistent": true
+    },
+    "build:prisma": {
+      "cache": false,
+      "inputs": ["prisma/schema.prisma"]
+    },
+    "build": {
+      "dependsOn": ["^build", "topo", "build:prisma"],
+      "inputs": [
+        "package.json",
+        "tsconfig.json",
+        "next.config.js",
+        "prisma/schema.prisma",
+        "**/*.ts",
+        "**/*.tsx"
+      ],
+      "outputs": [".next/**", "out/**"]
+    },
+    "test:ci": {
+      "cache": false
+    },
+    "start": {
+      "dependsOn": ["build"],
+      "cache": false
+    },
+    "lint": {}
+  }
+}
