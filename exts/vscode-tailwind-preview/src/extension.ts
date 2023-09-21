@@ -6,25 +6,16 @@ import tailwindcss from "tailwindcss";
 import { findMatchingTag, getTagForPosition } from "./tokenizer/tagMatcher";
 import { parseTags } from "./tokenizer/tagParser";
 import resolveConfig from "tailwindcss/resolveConfig";
+import { Match } from "./tokenizer/interfaces";
 
-/// Check if the current text looks like a tailwind component.
-async function renderHtml(
+/**
+ *
+ */
+async function renderTag(
   document: vscode.TextDocument,
-  position: vscode.Position,
+  tag: Match,
   styled: boolean
 ): Promise<[string, vscode.Range] | undefined> {
-  if ("jest-snapshot" !== document.languageId) {
-    return undefined;
-  }
-
-  const text = document.getText();
-  const tags = parseTags(text);
-
-  const tag = getTagForPosition(tags, document.offsetAt(position), true);
-  if (!tag) {
-    return;
-  }
-
   const range = new vscode.Range(
     document.positionAt(tag.opening.start),
     document.positionAt(tag.closing.end)
@@ -63,6 +54,27 @@ async function renderHtml(
   </html>`;
 
   return [finalHtml.trim(), range];
+}
+
+/// Check if the current text looks like a tailwind component.
+async function renderHtml(
+  document: vscode.TextDocument,
+  position: vscode.Position,
+  styled: boolean
+): Promise<[string, vscode.Range] | undefined> {
+  if ("jest-snapshot" !== document.languageId) {
+    return undefined;
+  }
+
+  const text = document.getText();
+  const tags = parseTags(text);
+
+  const tag = getTagForPosition(tags, document.offsetAt(position), true);
+  if (!tag) {
+    return;
+  }
+
+  return await renderTag(document, tag, styled);
 }
 
 export function activate(context: vscode.ExtensionContext) {
@@ -114,6 +126,7 @@ class PreviewCodeLensProvider implements vscode.CodeLensProvider {
     document: vscode.TextDocument,
     token: vscode.CancellationToken
   ): vscode.ProviderResult<vscode.CodeLens[]> {}
+
   async resolveCodeLens?(
     codeLens: vscode.CodeLens,
     token: vscode.CancellationToken
