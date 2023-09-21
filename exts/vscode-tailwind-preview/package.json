@@ -1,8 +1,8 @@
 {
-  "name": "cat-coding",
+  "name": "@dudykr/tailwind-preview",
   "description": "Cat Coding - A Webview API Sample",
   "version": "0.0.1",
-  "publisher": "vscode-samples",
+  "publisher": "Dudy",
   "private": true,
   "license": "MIT",
   "repository": {
@@ -16,7 +16,9 @@
     "Other"
   ],
   "activationEvents": [
-    "onWebviewPanel:catCoding"
+    "onLanguage:javascript",
+    "onLanguage:html",
+    "onLanguage:typescript"
   ],
   "main": "./out/extension.js",
   "contributes": {
