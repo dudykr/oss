@@ -12,6 +12,12 @@ function renderHtml(
   document: vscode.TextDocument,
   position: vscode.Position
 ): [string, vscode.Range] | undefined {
+  if ("jest-snapshot" !== document.languageId) {
+    return undefined;
+  }
+
+  console.log(Object.keys(document));
+  console.log(document, position);
   return;
 }
 
