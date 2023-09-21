@@ -98,4 +98,21 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.languages.registerHoverProvider(lang, hoverProvider)
     );
   }
+
+  // HoverProvider does not support styling, so we need to use a Webview.
+  // Instead of using a command pallette, we use a code lens to show the "open preview" button.
+  context.subscriptions.push(
+    vscode.commands.registerCommand("catCoding.start", () => {
+      // Create and show panel
+      const panel = vscode.window.createWebviewPanel(
+        "catCoding",
+        "Cat Coding",
+        vscode.ViewColumn.One,
+        {}
+      );
+
+      // And set its HTML content
+      panel.webview.html = getWebviewContent();
+    })
+  );
 }
