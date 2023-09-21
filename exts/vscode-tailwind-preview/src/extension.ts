@@ -37,33 +37,10 @@ async function renderTag(
     return [htmlContent, range];
   }
 
-  const css = postcss.parse(
-    `
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-  `,
-    { from: undefined }
-  );
-
-  // console.log('result', css);
-  const postcssConfig = await postcssrc(
-    {
-      cwd: path.dirname(document.fileName),
-    },
-    document.fileName
-  );
-
-  console.log("postcssConfig", postcssConfig);
-  const plugins = postcssConfig.plugins;
-  const cssResult = await postcss(plugins).process(css, postcssConfig.options);
-
   const finalHtml = `
   <html>
     <head>
-      <style>
-        ${cssResult.css}
-      </style>
+      <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body>
       ${htmlContent}
