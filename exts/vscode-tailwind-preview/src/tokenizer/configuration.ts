@@ -87,7 +87,9 @@ class Configuration {
 
   public configure({ context, onEditorChange }: ConfigurationOptions) {
     context.subscriptions.push(
-      vscode.window.onDidChangeActiveTextEditor(onEditorChange, this)
+      vscode.window.onDidChangeActiveTextEditor((e) => {
+        return e && onEditorChange(e);
+      }, this)
     );
   }
 }
