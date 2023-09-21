@@ -21,3 +21,5 @@ yarn/lock
 
 
 *.tsbuildinfo
+
+out/
