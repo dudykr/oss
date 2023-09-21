@@ -1,10 +1,13 @@
 import * as vscode from "vscode";
 import * as path from "path";
+import postcss from "postcss";
+import tailwindcss from "tailwindcss";
 import { findMatchingTag, getTagForPosition } from "./tokenizer/tagMatcher";
 import { parseTags } from "./tokenizer/tagParser";
+import resolveConfig from "tailwindcss/resolveConfig";
 
 /// Check if the current text looks like a tailwind component.
-function renderHtml(
+async function renderHtml(
   document: vscode.TextDocument,
   position: vscode.Position
 ): [string, vscode.Range] | undefined {
@@ -26,6 +29,26 @@ function renderHtml(
   );
   const htmlContent = document.getText(range);
 
+  const processor = postcss(tailwindcss("./tailwind.config.js"));
+  const cssResult = processor.process(
+    `
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+    `
+  );
+  const finalHtml = `
+  <html>
+    <head>
+      <style>
+        ${cssResult.css}
+      </style>
+    </head>
+    <body>
+      ${htmlContent}
+    </body>
+  </html>`;
+
   return [htmlContent, range];
 }
 
@@ -33,7 +56,7 @@ export function activate(context: vscode.ExtensionContext) {
   // Show image on hover
   const hoverProvider: vscode.HoverProvider = {
     async provideHover(document, position) {
-      const rendeded = renderHtml(document, position);
+      const rendeded = await renderHtml(document, position);
       if (!rendeded) {
         return;
       }
