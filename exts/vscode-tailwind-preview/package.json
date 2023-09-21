@@ -79,6 +79,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "moo": "^0.5.2"
+    "moo": "^0.5.2",
+    "postcss": "^8.4.30"
   }
 }
