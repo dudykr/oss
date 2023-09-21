@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import postcss from "postcss";
+import postcssrc from "postcss-load-config";
 import tailwindcss from "tailwindcss";
 import { findMatchingTag, getTagForPosition } from "./tokenizer/tagMatcher";
 import { parseTags } from "./tokenizer/tagParser";
@@ -38,10 +39,14 @@ async function renderHtml(
   `,
     { from: document.fileName }
   );
-  console.log(css);
 
-  const processor = postcss();
-  const cssResult = processor.process(css);
+  const postcssConfig = await postcssrc({
+    cwd: path.dirname(document.fileName),
+  });
+  console.log(postcssConfig);
+
+  const plugins = postcssConfig.plugins;
+  const cssResult = postcss(plugins).process(css);
   const finalHtml = `
   <html>
     <head>
@@ -53,6 +58,8 @@ async function renderHtml(
       ${htmlContent}
     </body>
   </html>`;
+
+  console.log(finalHtml);
 
   return [finalHtml, range];
 }
