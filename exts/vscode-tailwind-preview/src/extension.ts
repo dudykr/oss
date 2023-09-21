@@ -1,16 +1,7 @@
 import * as vscode from "vscode";
 import * as path from "path";
-import postcss from "postcss";
-import postcssrc from "postcss-load-config";
-import tailwindcss from "tailwindcss";
-import {
-  findMatchingTag,
-  getTagForPosition,
-  getTagsForPosition,
-  getValidTags,
-} from "./tokenizer/tagMatcher";
+import { getTagForPosition, getValidTags } from "./tokenizer/tagMatcher";
 import { parseTags } from "./tokenizer/tagParser";
-import resolveConfig from "tailwindcss/resolveConfig";
 import { Match } from "./tokenizer/interfaces";
 
 const COMMAND_OPEN_PREVIEW = "dudy.tailwind-preview.open";
