@@ -18,18 +18,15 @@ function renderHtml(
     return undefined;
   }
 
-  const text = document.getText(
-    new vscode.Range(position, document.positionAt(document.getText().length))
-  );
+  const text = document.getText();
   const tags = parseTags(text);
+  console.log("tags:", tags);
 
-  const tag = getTagForPosition(tags, 0);
+  const tag = getTagForPosition(tags, document.offsetAt(position), true);
 
   if (tag) {
     return [JSON.stringify(tag), new vscode.Range(position, position)];
   }
-  console.log(Object.keys(document));
-  console.log(document, position);
   return;
 }
 
