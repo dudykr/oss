@@ -40,14 +40,15 @@ async function renderHtml(
     { from: document.fileName }
   );
 
-  const postcssConfig = await postcssrc({
-    cwd: path.dirname(document.fileName),
-  });
-  console.log(postcssConfig);
+  // console.log('result', css);
+  const postcssConfig = await postcssrc({}, document.fileName);
 
   const plugins = postcssConfig.plugins;
-  const cssResult = postcss(plugins).process(css);
-  const finalHtml = `
+  console.log("plugins", plugins);
+  const cssResult = await postcss(plugins).process(css);
+
+  console.log("cssResult", cssResult);
+  const finalHtml = String.raw`
   <html>
     <head>
       <style>
