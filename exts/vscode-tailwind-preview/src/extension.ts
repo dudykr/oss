@@ -43,12 +43,18 @@ async function renderTag(
   @tailwind components;
   @tailwind utilities;
   `,
-    { from: document.fileName }
+    { from: undefined }
   );
 
   // console.log('result', css);
-  const postcssConfig = await postcssrc({}, document.fileName);
+  const postcssConfig = await postcssrc(
+    {
+      cwd: path.dirname(document.fileName),
+    },
+    document.fileName
+  );
 
+  console.log("postcssConfig", postcssConfig);
   const plugins = postcssConfig.plugins;
   const cssResult = await postcss(plugins).process(css);
 
