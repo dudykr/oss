@@ -43,13 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
       }
       const [htmlText, range] = rendeded;
 
-      const content = new vscode.MarkdownString(
-        `
-        <div>
-          ${htmlText}       
-        </div>
-        `
-      );
+      const content = new vscode.MarkdownString(htmlText);
 
       content.supportHtml = true;
 
