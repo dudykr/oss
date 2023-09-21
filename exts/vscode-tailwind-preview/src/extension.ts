@@ -29,7 +29,7 @@ async function renderHtml(
   );
   const htmlContent = document.getText(range);
 
-  const processor = postcss(tailwindcss("./tailwind.config.js"));
+  const processor = postcss(tailwindcss());
   const cssResult = processor.process(
     `
     @tailwind base;
@@ -49,7 +49,7 @@ async function renderHtml(
     </body>
   </html>`;
 
-  return [htmlContent, range];
+  return [finalHtml, range];
 }
 
 export function activate(context: vscode.ExtensionContext) {
