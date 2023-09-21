@@ -19,6 +19,11 @@ export function activate(context: vscode.ExtensionContext) {
   // Show image on hover
   const hoverProvider: vscode.HoverProvider = {
     provideHover(document, position) {
+      const rendeded = renderHtml(document, position);
+      if (!rendeded) {
+        return;
+      }
+
       const content = new vscode.MarkdownString(
         `<img src="${cats["Coding Cat"]}" width=144 height=144/>`
       );
