@@ -160,7 +160,7 @@ class PreviewCodeLensProvider implements vscode.CodeLensProvider {
       const codeLens = new vscode.CodeLens(range, {
         title: "Preview",
         command: COMMAND_OPEN_PREVIEW,
-        arguments: [document, tag.opening.start],
+        arguments: [document, document.positionAt(tag.opening.start)],
       });
 
       codeLenses.push(codeLens);
