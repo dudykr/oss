@@ -1,0 +1,29 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "scopeName": "jest-snapshot.injection",
+  "injectionSelector": "L:source -comment -string",
+  "patterns": [
+    {
+      "begin": "\\.to(?:Match|ThrowErrorMatching)InlineSnapshot\\(",
+      "end": "\\)",
+      "patterns": [
+        {
+          "contentName": "meta.embedded.inline.snap",
+          "begin": "(`)",
+          "end": "(`)",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.quasi.begin.js"
+            }
+          },
+          "endCaptures": {
+            "1": {
+              "name": "punctuation.definition.quasi.begin.js"
+            }
+          },
+          "patterns": [{ "include": "source.jest.snap" }]
+        }
+      ]
+    }
+  ]
+}

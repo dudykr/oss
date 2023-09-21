@@ -38,6 +38,27 @@
         ]
       }
     ],
+    "grammars": [
+      {
+        "language": "jest-snapshot",
+        "scopeName": "source.jest.snap",
+        "path": "./syntaxes/jest-snapshot.tmLanguage"
+      },
+      {
+        "scopeName": "jest-snapshot.injection",
+        "path": "./syntaxes/injection.tmLanguage.json",
+        "embeddedLanguages": {
+          "meta.embedded.inline.snap": "source.jest.snap"
+        },
+        "injectTo": [
+          "source.js",
+          "source.jsx",
+          "source.js.jsx",
+          "source.ts",
+          "source.tsx"
+        ]
+      }
+    ],
     "commands": []
   },
   "scripts": {
@@ -54,8 +75,5 @@
     "@typescript-eslint/parser": "^6.7.0",
     "eslint": "^8.26.0",
     "typescript": "^5.2.2"
-  },
-  "extensionDependencies": [
-    "tlent.jest-snapshot-language-support"
-  ]
+  }
 }
