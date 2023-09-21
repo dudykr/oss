@@ -13,6 +13,8 @@ import { parseTags } from "./tokenizer/tagParser";
 import resolveConfig from "tailwindcss/resolveConfig";
 import { Match } from "./tokenizer/interfaces";
 
+const COMMAND_OPEN_PREVIEW = "dudy.tailwind-preview.open";
+
 /**
  *
  */
@@ -148,7 +150,7 @@ class PreviewCodeLensProvider implements vscode.CodeLensProvider {
 
       const codeLens = new vscode.CodeLens(range, {
         title: "Preview",
-        command: "dudy.tailwind-preview.open",
+        command: COMMAND_OPEN_PREVIEW,
         arguments: [document.uri, range],
       });
 
