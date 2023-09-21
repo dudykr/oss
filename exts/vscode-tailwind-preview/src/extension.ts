@@ -3,12 +3,6 @@ import * as path from "path";
 import { findMatchingTag, getTagForPosition } from "./tokenizer/tagMatcher";
 import { parseTags } from "./tokenizer/tagParser";
 
-const cats = {
-  "Coding Cat": "https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif",
-  "Compiling Cat": "https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif",
-  "Testing Cat": "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif",
-};
-
 /// Check if the current text looks like a tailwind component.
 function renderHtml(
   document: vscode.TextDocument,
@@ -22,15 +16,15 @@ function renderHtml(
   const tags = parseTags(text);
 
   const tag = getTagForPosition(tags, document.offsetAt(position), true);
-
-  if (tag) {
-    const range = new vscode.Range(
-      document.positionAt(tag.opening.start),
-      document.positionAt(tag.closing.end)
-    );
-    return [document.getText(range), range];
+  if (!tag) {
+    return;
   }
-  return;
+
+  const range = new vscode.Range(
+    document.positionAt(tag.opening.start),
+    document.positionAt(tag.closing.end)
+  );
+  return [document.getText(range), range];
 }
 
 export function activate(context: vscode.ExtensionContext) {
