@@ -135,6 +135,12 @@ importers:
       moo:
         specifier: ^0.5.2
         version: 0.5.2
+      postcss:
+        specifier: ^8.4.30
+        version: 8.4.30
+      postcss-load-config:
+        specifier: ^4.0.1
+        version: 4.0.1(postcss@8.4.30)
     devDependencies:
       '@types/moo':
         specifier: ^0.5.6

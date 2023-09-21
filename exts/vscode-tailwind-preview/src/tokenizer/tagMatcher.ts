@@ -61,6 +61,10 @@ export function getTagsForPosition(tagsList: PartialMatch[], position: number) {
   ) as Match[];
 }
 
+export function getValidTags(tagsList: PartialMatch[]) {
+  return tagsList.filter((pair) => isTagPairValid(pair)) as Match[];
+}
+
 export function getTagForPosition(
   tagsList: PartialMatch[],
   position: number,
