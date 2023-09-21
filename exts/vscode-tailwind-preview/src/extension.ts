@@ -259,26 +259,10 @@ class PreviewPanel {
   }
 
   private _update() {
-    const webview = this._panel.webview;
-
-    // Vary the webview's content based on where it is located in the editor.
-    switch (this._panel.viewColumn) {
-      case vscode.ViewColumn.Two:
-        this._updateForCat(webview, "Compiling Cat");
-        return;
-
-      case vscode.ViewColumn.Three:
-        this._updateForCat(webview, "Testing Cat");
-        return;
-
-      case vscode.ViewColumn.One:
-      default:
-        this._updateForCat(webview, "Coding Cat");
-        return;
-    }
+    // TODO
   }
 
-  private async _updateForCat(
+  private async _loadNew(
     webview: vscode.Webview,
     document: vscode.TextDocument,
     pos: vscode.Position
