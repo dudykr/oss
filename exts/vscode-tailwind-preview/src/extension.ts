@@ -29,6 +29,7 @@ async function renderHtml(
   );
   const htmlContent = document.getText(range);
 
+  console.log("fileName", document.fileName);
   const css = postcss.parse(
     `
   @tailwind base;
@@ -37,8 +38,9 @@ async function renderHtml(
   `,
     { from: document.fileName }
   );
+  console.log(css);
 
-  const processor = postcss(tailwindcss());
+  const processor = postcss();
   const cssResult = processor.process(css);
   const finalHtml = `
   <html>
