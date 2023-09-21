@@ -73,7 +73,7 @@ export default {
   editLink: {
     text: "Edit this page on GitHub",
   },
-  docsRepositoryBase: "https://github.com/dudykr/oss-docs/blob/main",
+  docsRepositoryBase: "https://github.com/dudykr/oss/tree/main/docs/stc",
   useNextSeoProps() {
     return {
       titleTemplate: "%s – stc",
