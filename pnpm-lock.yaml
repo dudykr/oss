@@ -136,6 +136,9 @@ importers:
         specifier: ^0.5.2
         version: 0.5.2
     devDependencies:
+      '@types/moo':
+        specifier: ^0.5.6
+        version: 0.5.6
       '@types/node':
         specifier: ^16.18.34
         version: 16.18.34
@@ -689,6 +692,10 @@ packages:
   /@types/mdx@2.0.7:
     resolution: {integrity: sha512-BG4tyr+4amr3WsSEmHn/fXPqaCba/AYZ7dsaQTiavihQunHSIxk+uAtqsjvicNpyHN6cm+B9RVrUOtW9VzIKHw==}
     dev: false
+
+  /@types/moo@0.5.6:
+    resolution: {integrity: sha512-Q60hZhulhl2Ox4LjbJvhH+HzsKrwzLPjEB8dZw0fK1MH2HyOLe6LDou68yTfsWasxGv7DPZe5VNM5vgpzOa2nw==}
+    dev: true
 
   /@types/ms@0.7.31:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
