@@ -80,6 +80,7 @@
   },
   "dependencies": {
     "moo": "^0.5.2",
-    "postcss": "^8.4.30"
+    "postcss": "^8.4.30",
+    "postcss-load-config": "^4.0.1"
   }
 }
