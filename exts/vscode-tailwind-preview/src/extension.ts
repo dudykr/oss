@@ -33,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
     },
   };
 
-  for (const lang of ["javascript", "typescript", "html"]) {
+  for (const lang of ["javascript", "typescript", "html", "jest-snapshot"]) {
     context.subscriptions.push(
       vscode.languages.registerHoverProvider(lang, hoverProvider)
     );
