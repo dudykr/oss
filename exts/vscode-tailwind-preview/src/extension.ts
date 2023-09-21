@@ -29,14 +29,17 @@ async function renderHtml(
   );
   const htmlContent = document.getText(range);
 
-  const processor = postcss(tailwindcss());
-  const cssResult = processor.process(
+  const css = postcss.parse(
     `
-    @tailwind base;
-    @tailwind components;
-    @tailwind utilities;
-    `
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+  `,
+    { from: document.fileName }
   );
+
+  const processor = postcss(tailwindcss());
+  const cssResult = processor.process(css);
   const finalHtml = `
   <html>
     <head>
