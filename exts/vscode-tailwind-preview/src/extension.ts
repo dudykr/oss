@@ -16,6 +16,10 @@ async function renderTag(
   tag: Match,
   styled: boolean
 ): Promise<[string, vscode.Range] | undefined> {
+  if ("jest-snapshot" !== document.languageId) {
+    return undefined;
+  }
+
   const range = new vscode.Range(
     document.positionAt(tag.opening.start),
     document.positionAt(tag.closing.end)
