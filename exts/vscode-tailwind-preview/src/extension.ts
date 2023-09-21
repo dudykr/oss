@@ -24,7 +24,9 @@ function renderHtml(
     document.positionAt(tag.opening.start),
     document.positionAt(tag.closing.end)
   );
-  return [document.getText(range), range];
+  const htmlContent = document.getText(range);
+
+  return [htmlContent, range];
 }
 
 export function activate(context: vscode.ExtensionContext) {
