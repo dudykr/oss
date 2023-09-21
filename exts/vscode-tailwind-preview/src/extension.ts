@@ -20,12 +20,15 @@ function renderHtml(
 
   const text = document.getText();
   const tags = parseTags(text);
-  console.log("tags:", tags);
 
   const tag = getTagForPosition(tags, document.offsetAt(position), true);
 
   if (tag) {
-    return [JSON.stringify(tag), new vscode.Range(position, position)];
+    const range = new vscode.Range(
+      document.positionAt(tag.opening.start),
+      document.positionAt(tag.closing.end)
+    );
+    return [JSON.stringify(tag), range];
   }
   return;
 }
