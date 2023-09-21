@@ -1,6 +1,6 @@
 # oss-services
 
-Various open-source project services by Dudy.
+Various open-source projects by Dudy.
 
 ## Apps (`apps/`)
 
@@ -9,6 +9,18 @@ Various open-source project services by Dudy.
 - Homepage: https://plugins.swc.rs
 
 This is a web app that lists all the plugins for the [swc](https://swc.rs) project.
+
+## Browser/IDE Extensions (`exts/`)
+
+### `exts/vscode-tailwind-preview/`
+
+A vscode extension that adds a preview action to Tailwind components in **jest snapshots**.
+
+## Packages (`packages/`)
+
+### `packages/utils/`
+
+A collection of utility functions.
 
 ## Docs (`docs/`)
 
