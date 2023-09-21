@@ -10,7 +10,7 @@ Various open-source project services by Dudy.
 
 This is a web app that lists all the plugins for the [swc](https://swc.rs) project.
 
-## Docs (`docs.`)
+## Docs (`docs/`)
 
 ### `docs/stc/`
 
