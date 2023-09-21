@@ -148,8 +148,8 @@ class PreviewCodeLensProvider implements vscode.CodeLensProvider {
 
       const codeLens = new vscode.CodeLens(range, {
         title: "Preview",
-        command: "tailwind.preview",
-        arguments: [document, range],
+        command: "dudy.tailwind-preview.open",
+        arguments: [document.uri, range],
       });
 
       codeLenses.push(codeLens);
