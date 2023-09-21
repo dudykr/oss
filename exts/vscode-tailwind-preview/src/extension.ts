@@ -244,12 +244,6 @@ class PreviewPanel {
     );
   }
 
-  public doRefactor() {
-    // Send a message to the webview webview.
-    // You can send any JSON serializable data.
-    this._panel.webview.postMessage({ command: "refactor" });
-  }
-
   public dispose() {
     PreviewPanel.currentPanel = undefined;
 
@@ -284,9 +278,15 @@ class PreviewPanel {
     }
   }
 
-  private _updateForCat(webview: vscode.Webview, catName: keyof typeof cats) {
-    this._panel.title = catName;
-    this._panel.webview.html = this._getHtmlForWebview(webview, cats[catName]);
+  private async _updateForCat(
+    webview: vscode.Webview,
+    document: vscode.TextDocument,
+    pos: vscode.Position
+  ) {
+    const res = await this._getHtmlForWebview(webview, document, pos);
+    if (res) {
+      this._panel.webview.html = res;
+    }
   }
 
   private async _getHtmlForWebview(
