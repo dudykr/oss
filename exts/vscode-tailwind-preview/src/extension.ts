@@ -134,8 +134,8 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand(
       COMMAND_OPEN_PREVIEW,
-      async (documentUri, range) => {
-        PreviewPanel.createOrShow(documentUri, range);
+      async (document: vscode.TextDocument, pos: vscode.Position) => {
+        PreviewPanel.createOrShow(context.extensionUri, document, pos);
       }
     )
   );
@@ -160,7 +160,7 @@ class PreviewCodeLensProvider implements vscode.CodeLensProvider {
       const codeLens = new vscode.CodeLens(range, {
         title: "Preview",
         command: COMMAND_OPEN_PREVIEW,
-        arguments: [document.uri, range],
+        arguments: [document, tag.opening.start],
       });
 
       codeLenses.push(codeLens);
@@ -176,13 +176,17 @@ class PreviewPanel {
    */
   public static currentPanel: PreviewPanel | undefined;
 
-  public static readonly viewType = "catCoding";
+  public static readonly viewType = "tailwindPreview";
 
   private readonly _panel: vscode.WebviewPanel;
   private readonly _extensionUri: vscode.Uri;
   private _disposables: vscode.Disposable[] = [];
 
-  public static createOrShow(extensionUri: vscode.Uri, pos: vscode.Position) {
+  public static createOrShow(
+    extensionUri: vscode.Uri,
+    document: vscode.TextDocument,
+    pos: vscode.Position
+  ) {
     const column = vscode.window.activeTextEditor
       ? vscode.window.activeTextEditor.viewColumn
       : undefined;
@@ -196,12 +200,13 @@ class PreviewPanel {
     // Otherwise, create a new panel.
     const panel = vscode.window.createWebviewPanel(
       PreviewPanel.viewType,
-      "Cat Coding",
+      "Tailwind Preview",
       column || vscode.ViewColumn.One,
-      getWebviewOptions(extensionUri)
+      {}
     );
 
     PreviewPanel.currentPanel = new PreviewPanel(panel, extensionUri);
+    PreviewPanel.currentPanel.loadNew(document, pos);
   }
 
   public static revive(panel: vscode.WebviewPanel, extensionUri: vscode.Uri) {
@@ -262,50 +267,17 @@ class PreviewPanel {
     // TODO
   }
 
-  private async _loadNew(
-    webview: vscode.Webview,
-    document: vscode.TextDocument,
-    pos: vscode.Position
-  ) {
-    const res = await this._getHtmlForWebview(webview, document, pos);
+  private async loadNew(document: vscode.TextDocument, pos: vscode.Position) {
+    const res = await this.getHtmlForWebview(document, pos);
     if (res) {
       this._panel.webview.html = res;
     }
   }
 
-  private async _getHtmlForWebview(
-    webview: vscode.Webview,
+  private async getHtmlForWebview(
     document: vscode.TextDocument,
     pos: vscode.Position
   ) {
-    // Local path to main script run in the webview
-    const scriptPathOnDisk = vscode.Uri.joinPath(
-      this._extensionUri,
-      "media",
-      "main.js"
-    );
-
-    // And the uri we use to load this script in the webview
-    const scriptUri = webview.asWebviewUri(scriptPathOnDisk);
-
-    // Local path to css styles
-    const styleResetPath = vscode.Uri.joinPath(
-      this._extensionUri,
-      "media",
-      "reset.css"
-    );
-    const stylesPathMainPath = vscode.Uri.joinPath(
-      this._extensionUri,
-      "media",
-      "vscode.css"
-    );
-
-    // Uri to load styles into webview
-    const stylesResetUri = webview.asWebviewUri(styleResetPath);
-    const stylesMainUri = webview.asWebviewUri(stylesPathMainPath);
-
-    // Use a nonce to only allow specific scripts to be run
-
     const res = await renderHtml(document, pos, true);
     if (!res) {
       return;
