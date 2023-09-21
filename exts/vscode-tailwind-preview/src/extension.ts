@@ -48,7 +48,7 @@ async function renderHtml(
   const cssResult = await postcss(plugins).process(css);
 
   console.log("cssResult", cssResult);
-  const finalHtml = String.raw`
+  const finalHtml = `
   <html>
     <head>
       <style>
@@ -62,7 +62,7 @@ async function renderHtml(
 
   console.log(finalHtml);
 
-  return [finalHtml, range];
+  return [finalHtml.trim(), range];
 }
 
 export function activate(context: vscode.ExtensionContext) {
@@ -89,7 +89,7 @@ export function activate(context: vscode.ExtensionContext) {
         path.join(context.extensionPath, "images", path.sep)
       );
 
-      return new vscode.Hover(content, new vscode.Range(position, position));
+      return new vscode.Hover(content, range);
     },
   };
 
