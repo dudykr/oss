@@ -1,5 +1,7 @@
 import * as vscode from "vscode";
 import * as path from "path";
+import { findMatchingTag, getTagForPosition } from "./tokenizer/tagMatcher";
+import { parseTags } from "./tokenizer/tagParser";
 
 const cats = {
   "Coding Cat": "https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif",
@@ -16,6 +18,16 @@ function renderHtml(
     return undefined;
   }
 
+  const text = document.getText(
+    new vscode.Range(position, document.positionAt(document.getText().length))
+  );
+  const tags = parseTags(text);
+
+  const tag = getTagForPosition(tags, 0);
+
+  if (tag) {
+    return [JSON.stringify(tag), new vscode.Range(position, position)];
+  }
   console.log(Object.keys(document));
   console.log(document, position);
   return;
