@@ -56,7 +56,7 @@ async function renderTag(
 
   console.log("postcssConfig", postcssConfig);
   const plugins = postcssConfig.plugins;
-  const cssResult = await postcss(plugins).process(css);
+  const cssResult = await postcss(plugins).process(css, postcssConfig.options);
 
   const finalHtml = `
   <html>
