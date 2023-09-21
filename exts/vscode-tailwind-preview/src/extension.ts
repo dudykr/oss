@@ -28,7 +28,7 @@ function renderHtml(
       document.positionAt(tag.opening.start),
       document.positionAt(tag.closing.end)
     );
-    return [JSON.stringify(tag), range];
+    return [document.getText(range), range];
   }
   return;
 }
@@ -36,14 +36,19 @@ function renderHtml(
 export function activate(context: vscode.ExtensionContext) {
   // Show image on hover
   const hoverProvider: vscode.HoverProvider = {
-    provideHover(document, position) {
+    async provideHover(document, position) {
       const rendeded = renderHtml(document, position);
       if (!rendeded) {
         return;
       }
+      const [htmlText, range] = rendeded;
 
       const content = new vscode.MarkdownString(
-        `<img src="${cats["Coding Cat"]}" width=144 height=144/>`
+        `
+        <div>
+          ${htmlText}       
+        </div>
+        `
       );
 
       content.supportHtml = true;
