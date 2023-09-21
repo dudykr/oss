@@ -130,11 +130,17 @@ importers:
         specifier: 4.6.3
         version: 4.6.3
 
-  exts/webview-view-sample:
+  exts/webview-sample:
     devDependencies:
+      '@types/node':
+        specifier: ^16.18.34
+        version: 16.18.34
       '@types/vscode':
         specifier: ^1.73.0
         version: 1.73.0
+      '@types/vscode-webview':
+        specifier: ^1.57.0
+        version: 1.57.0
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.7.0
         version: 6.7.0(@typescript-eslint/parser@6.7.0)(eslint@8.49.0)(typescript@5.2.2)
@@ -142,7 +148,7 @@ importers:
         specifier: ^6.7.0
         version: 6.7.0(eslint@8.49.0)(typescript@5.2.2)
       eslint:
-        specifier: ^8.32.0
+        specifier: ^8.26.0
         version: 8.49.0
       typescript:
         specifier: ^5.2.2
@@ -660,6 +666,10 @@ packages:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
     dev: false
 
+  /@types/node@16.18.34:
+    resolution: {integrity: sha512-VmVm7gXwhkUimRfBwVI1CHhwp86jDWR04B5FGebMMyxV90SlCmFujwUHrxTD4oO+SOYU86SoxvhgeRQJY7iXFg==}
+    dev: true
+
   /@types/node@20.6.3:
     resolution: {integrity: sha512-HksnYH4Ljr4VQgEy2lTStbCKv/P590tmPe5HqOnv9Gprffgv5WXAY+Y5Gqniu0GGqeTCUdBnzC3QSrzPkBkAMA==}
 
@@ -695,6 +705,10 @@ packages:
   /@types/unist@2.0.8:
     resolution: {integrity: sha512-d0XxK3YTObnWVp6rZuev3c49+j4Lo8g4L1ZRm9z5L0xpoZycUPshHgczK5gsUMaZOstjVYYi09p5gYvUtfChYw==}
     dev: false
+
+  /@types/vscode-webview@1.57.0:
+    resolution: {integrity: sha512-x3Cb/SMa1IwRHfSvKaZDZOTh4cNoG505c3NjTqGlMC082m++x/ETUmtYniDsw6SSmYzZXO8KBNhYxR0+VqymqA==}
+    dev: true
 
   /@types/vscode@1.73.0:
     resolution: {integrity: sha512-FhkfF7V3fj7S3WqXu7AxFesBLO3uMkdCPJJPbwyZXezv2xJ6xBWHYM2CmkkbO8wT9Fr3KipwxGGOoQRrYq7mHg==}
