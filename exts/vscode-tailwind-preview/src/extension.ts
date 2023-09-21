@@ -10,7 +10,8 @@ import resolveConfig from "tailwindcss/resolveConfig";
 /// Check if the current text looks like a tailwind component.
 async function renderHtml(
   document: vscode.TextDocument,
-  position: vscode.Position
+  position: vscode.Position,
+  styled: boolean
 ): Promise<[string, vscode.Range] | undefined> {
   if ("jest-snapshot" !== document.languageId) {
     return undefined;
@@ -30,7 +31,10 @@ async function renderHtml(
   );
   const htmlContent = document.getText(range);
 
-  console.log("fileName", document.fileName);
+  if (!styled) {
+    return [htmlContent, range];
+  }
+
   const css = postcss.parse(
     `
   @tailwind base;
@@ -44,10 +48,8 @@ async function renderHtml(
   const postcssConfig = await postcssrc({}, document.fileName);
 
   const plugins = postcssConfig.plugins;
-  console.log("plugins", plugins);
   const cssResult = await postcss(plugins).process(css);
 
-  console.log("cssResult", cssResult);
   const finalHtml = `
   <html>
     <head>
@@ -60,8 +62,6 @@ async function renderHtml(
     </body>
   </html>`;
 
-  console.log(finalHtml);
-
   return [finalHtml.trim(), range];
 }
 
@@ -69,7 +69,7 @@ export function activate(context: vscode.ExtensionContext) {
   // Show image on hover
   const hoverProvider: vscode.HoverProvider = {
     async provideHover(document, position) {
-      const rendeded = await renderHtml(document, position);
+      const rendeded = await renderHtml(document, position, false);
       if (!rendeded) {
         return;
       }
