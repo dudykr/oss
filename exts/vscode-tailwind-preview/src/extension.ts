@@ -10,7 +10,7 @@ import resolveConfig from "tailwindcss/resolveConfig";
 async function renderHtml(
   document: vscode.TextDocument,
   position: vscode.Position
-): [string, vscode.Range] | undefined {
+): Promise<[string, vscode.Range] | undefined> {
   if ("jest-snapshot" !== document.languageId) {
     return undefined;
   }
