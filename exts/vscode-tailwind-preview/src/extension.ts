@@ -7,6 +7,12 @@ const cats = {
   "Testing Cat": "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif",
 };
 
+/// Check if the current text looks like a tailwind component.
+function renderHtml(
+  document: vscode.TextDocument,
+  position: vscode.Position
+): [string, vscode.Range] | undefined {}
+
 export function activate(context: vscode.ExtensionContext) {
   // Show image on hover
   const hoverProvider: vscode.HoverProvider = {
@@ -14,8 +20,6 @@ export function activate(context: vscode.ExtensionContext) {
       const content = new vscode.MarkdownString(
         `<img src="${cats["Coding Cat"]}" width=144 height=144/>`
       );
-
-      content.appendMarkdown(`$(zap)`); // notice the little "zap" icon in the hover
 
       content.supportHtml = true;
 
@@ -38,20 +42,6 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.languages.registerHoverProvider(lang, hoverProvider)
     );
   }
-
-  context.subscriptions.push(
-    vscode.commands.registerCommand("catCoding.start", () => {
-      CatCodingPanel.createOrShow(context.extensionUri);
-    })
-  );
-
-  context.subscriptions.push(
-    vscode.commands.registerCommand("catCoding.doRefactor", () => {
-      if (CatCodingPanel.currentPanel) {
-        CatCodingPanel.currentPanel.doRefactor();
-      }
-    })
-  );
 
   if (vscode.window.registerWebviewPanelSerializer) {
     // Make sure we register a serializer in activation event
