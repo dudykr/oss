@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import * as path from "path";
 
 const cats = {
   "Coding Cat": "https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif",
@@ -7,6 +8,35 @@ const cats = {
 };
 
 export function activate(context: vscode.ExtensionContext) {
+  // Show image on hover
+  const htmlHoverProvider: vscode.HoverProvider = {
+    provideHover(document, position) {
+      const content = new vscode.MarkdownString(
+        `<img src="${cats["Coding Cat"]}" width=144 height=144/>`
+      );
+
+      content.appendMarkdown(`$(zap)`); // notice the little "zap" icon in the hover
+
+      content.supportHtml = true;
+
+      content.isTrusted = true;
+
+      content.supportThemeIcons = true; // to supports codicons
+
+      // baseUri was necessary, full path in the img src did not work
+      // with your icons stroed in the 'images' directory
+      content.baseUri = vscode.Uri.file(
+        path.join(context.extensionPath, "images", path.sep)
+      );
+
+      return new vscode.Hover(content, new vscode.Range(position, position));
+    },
+  };
+
+  context.subscriptions.push(
+    vscode.languages.registerHoverProvider("plaintext", htmlHoverProvider)
+  );
+
   context.subscriptions.push(
     vscode.commands.registerCommand("catCoding.start", () => {
       CatCodingPanel.createOrShow(context.extensionUri);
