@@ -1,16 +1,7 @@
 import * as vscode from "vscode";
 import * as path from "path";
-import postcss from "postcss";
-import postcssrc from "postcss-load-config";
-import tailwindcss from "tailwindcss";
-import {
-  findMatchingTag,
-  getTagForPosition,
-  getTagsForPosition,
-  getValidTags,
-} from "./tokenizer/tagMatcher";
+import { getTagForPosition, getValidTags } from "./tokenizer/tagMatcher";
 import { parseTags } from "./tokenizer/tagParser";
-import resolveConfig from "tailwindcss/resolveConfig";
 import { Match } from "./tokenizer/interfaces";
 
 const COMMAND_OPEN_PREVIEW = "dudy.tailwind-preview.open";
@@ -37,27 +28,10 @@ async function renderTag(
     return [htmlContent, range];
   }
 
-  const css = postcss.parse(
-    `
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-  `,
-    { from: document.fileName }
-  );
-
-  // console.log('result', css);
-  const postcssConfig = await postcssrc({}, document.fileName);
-
-  const plugins = postcssConfig.plugins;
-  const cssResult = await postcss(plugins).process(css);
-
   const finalHtml = `
   <html>
     <head>
-      <style>
-        ${cssResult.css}
-      </style>
+      <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body>
       ${htmlContent}
