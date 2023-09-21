@@ -3,7 +3,12 @@ import * as path from "path";
 import postcss from "postcss";
 import postcssrc from "postcss-load-config";
 import tailwindcss from "tailwindcss";
-import { findMatchingTag, getTagForPosition } from "./tokenizer/tagMatcher";
+import {
+  findMatchingTag,
+  getTagForPosition,
+  getTagsForPosition,
+  getValidTags,
+} from "./tokenizer/tagMatcher";
 import { parseTags } from "./tokenizer/tagParser";
 import resolveConfig from "tailwindcss/resolveConfig";
 import { Match } from "./tokenizer/interfaces";
@@ -129,10 +134,32 @@ class PreviewCodeLensProvider implements vscode.CodeLensProvider {
   async provideCodeLenses(
     document: vscode.TextDocument,
     token: vscode.CancellationToken
-  ): vscode.ProviderResult<vscode.CodeLens[]> {}
+  ): Promise<vscode.CodeLens[]> {
+    const text = document.getText();
+    const tags = getValidTags(parseTags(text));
 
-  async resolveCodeLens?(
-    codeLens: vscode.CodeLens,
-    token: vscode.CancellationToken
-  ): vscode.ProviderResult<vscode.CodeLens> {}
+    const codeLenses: vscode.CodeLens[] = [];
+
+    for (const tag of tags) {
+      const range = new vscode.Range(
+        document.positionAt(tag.opening.start),
+        document.positionAt(tag.closing.end)
+      );
+
+      const codeLens = new vscode.CodeLens(range, {
+        title: "Preview",
+        command: "tailwind.preview",
+        arguments: [document, range],
+      });
+
+      codeLenses.push(codeLens);
+    }
+
+    return codeLenses;
+  }
+
+  // async resolveCodeLens?(
+  //   codeLens: vscode.CodeLens,
+  //   token: vscode.CancellationToken
+  // ): vscode.ProviderResult<vscode.CodeLens> { }
 }
