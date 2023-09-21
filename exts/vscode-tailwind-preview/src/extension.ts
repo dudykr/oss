@@ -9,7 +9,7 @@ const cats = {
 
 export function activate(context: vscode.ExtensionContext) {
   // Show image on hover
-  const htmlHoverProvider: vscode.HoverProvider = {
+  const hoverProvider: vscode.HoverProvider = {
     provideHover(document, position) {
       const content = new vscode.MarkdownString(
         `<img src="${cats["Coding Cat"]}" width=144 height=144/>`
@@ -33,9 +33,11 @@ export function activate(context: vscode.ExtensionContext) {
     },
   };
 
-  context.subscriptions.push(
-    vscode.languages.registerHoverProvider("plaintext", htmlHoverProvider)
-  );
+  for (const lang of ["javascript", "typescript", "html"]) {
+    context.subscriptions.push(
+      vscode.languages.registerHoverProvider(lang, hoverProvider)
+    );
+  }
 
   context.subscriptions.push(
     vscode.commands.registerCommand("catCoding.start", () => {
