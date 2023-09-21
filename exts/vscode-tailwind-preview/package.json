@@ -16,12 +16,28 @@
     "Other"
   ],
   "activationEvents": [
+    "onLanguage:jest-snapshot",
+    "onLanguage:typescript",
     "onLanguage:javascript",
-    "onLanguage:html",
-    "onLanguage:typescript"
+    "onLanguage:html"
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "languages": [
+      {
+        "id": "jest-snapshot",
+        "aliases": [
+          "Jest Snapshot",
+          "jest-snapshot"
+        ],
+        "extensions": [
+          ".js.snap",
+          ".jsx.snap",
+          ".ts.snap",
+          ".tsx.snap"
+        ]
+      }
+    ],
     "commands": [
       {
         "command": "catCoding.start",
