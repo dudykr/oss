@@ -157,9 +157,4 @@ class PreviewCodeLensProvider implements vscode.CodeLensProvider {
 
     return codeLenses;
   }
-
-  // async resolveCodeLens?(
-  //   codeLens: vscode.CodeLens,
-  //   token: vscode.CancellationToken
-  // ): vscode.ProviderResult<vscode.CodeLens> { }
 }
