@@ -1,5 +1,4 @@
 {
-  "editor.formatOnSave": true,
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
@@ -11,5 +10,12 @@
     "**/.turbo": true,
     "**/.vercel": true,
     "**/.swc": true
+  },
+  "editor.formatOnSave": true,
+  "[typescript]": {
+    "editor.formatOnSave": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
   }
 }
