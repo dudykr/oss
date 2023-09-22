@@ -1,4 +1,5 @@
 import { expect } from "@jest/globals";
+import "@jest/expect";
 //@ts-ignore
 import { toMatchImageSnapshot } from "jest-image-snapshot";
 expect.extend({ toMatchImageSnapshot });
