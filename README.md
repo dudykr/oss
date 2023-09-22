@@ -22,6 +22,14 @@ A vscode extension that adds a preview action to Tailwind components in **jest s
 
 A collection of utility functions.
 
+### `packages/jest-expect-image/`
+
+A jest matcher for comparing images.
+
+### `packages/next-image-snapshot/`
+
+A test utility for comparing UI as images in Next.js projects.
+
 ## Docs (`docs/`)
 
 ### `docs/stc/`

@@ -8,9 +8,25 @@
       "cache": false,
       "persistent": true
     },
-    "test": {
-      "cache": false,
-      "persistent": true
+    "build:tsc": {
+      "dependsOn": ["topo"],
+      "inputs": [
+        "lib/**/*.ts",
+        "lib/**/*.tsx",
+        "tests/**/*.ts",
+        "tests/**/*.tsx"
+      ],
+      "outputs": [
+        "lib/**/*.js",
+        "lib/**/*.d.ts",
+        "lib/**/*.map",
+        "tests/**/*.js",
+        "tests/**/*.d.ts",
+        "tests/**/*.map"
+      ]
+    },
+    "build:test": {
+      "dependsOn": ["build:tsc", "^build:tsc"]
     },
     "build:prisma": {
       "cache": false,
@@ -28,7 +44,13 @@
       ],
       "outputs": [".next/**", "out/**"]
     },
+    "test": {
+      "dependsOn": ["build:test"],
+      "cache": false,
+      "persistent": true
+    },
     "test:ci": {
+      "dependsOn": ["build:test"],
       "cache": false
     },
     "start": {
