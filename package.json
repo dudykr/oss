@@ -18,6 +18,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@changesets/cli": "^2.26.2",
     "eslint": "8.23.0",
     "eslint-plugin-simple-import-sort": "^9.0.0",
     "husky": "^8.0.1",
