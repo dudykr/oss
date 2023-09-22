@@ -1,6 +1,5 @@
 {
-  "name": "stc",
-  "version": "0.1.0",
+  "name": "@dudykr/stc-docs",
   "private": true,
   "scripts": {
     "dev": "next dev -p 50001",

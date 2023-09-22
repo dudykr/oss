@@ -12,12 +12,14 @@
     "start": "turbo run start",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "test:ci": "turbo run test:ci"
+    "test:ci": "turbo run test:ci",
+    "pub": "changeset version && changeset publish"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@changesets/cli": "^2.26.2",
     "eslint": "8.23.0",
     "eslint-plugin-simple-import-sort": "^9.0.0",
     "husky": "^8.0.1",
