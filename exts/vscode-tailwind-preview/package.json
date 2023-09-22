@@ -1,9 +1,8 @@
 {
-  "name": "@dudykr/tailwind-preview",
-  "description": "Cat Coding - A Webview API Sample",
+  "name": "vscode-tailwind-preview",
+  "description": "Preview Tailwind components in VSCode",
   "version": "0.0.1",
   "publisher": "Dudy",
-  "private": true,
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
