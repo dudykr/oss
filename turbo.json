@@ -45,10 +45,12 @@
       "outputs": [".next/**", "out/**"]
     },
     "test": {
+      "dependsOn": ["build:test"],
       "cache": false,
       "persistent": true
     },
     "test:ci": {
+      "dependsOn": ["build:test"],
       "cache": false
     },
     "start": {
