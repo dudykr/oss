@@ -1,6 +1,5 @@
 {
   "name": "@dudykr/example-next-app-for-image-snapshot",
-  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
