@@ -33,7 +33,7 @@ importers:
         specifier: ^1.10.14
         version: 1.10.14
 
-  apps/swc-plugins:
+  apps/swc-plugin-registry:
     dependencies:
       '@types/node':
         specifier: 20.6.3
