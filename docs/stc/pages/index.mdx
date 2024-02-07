@@ -3,20 +3,3 @@ title: "STC: Speedy type checker"
 ---
 
 The fastest TypeScript type checker written in Rust. [This project is offically abandoned.](https://github.com/dudykr/stc/issues/1101)
-
-## Status
-
-`stc` is under active development.
-To provide an estimate of the progress, we provide historical statistics.
-
-- <strong>Required</strong> means a true negative, which is a type error that is
-  not reported by `stc`.
-
-- <strong>Matched</strong> means a true positive, which is a type error that is reported
-  by `stc` and correct.
-
-- <strong>Extra</strong> means a false positive. In other words, it's the number
-  of incorrect errors `stc` emits while it should not.
-
-- <strong>Panic</strong> means the analyzer panicked while validating input files,
-  due to a logic bug.
