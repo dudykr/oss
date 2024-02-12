@@ -18,7 +18,7 @@
     "url": "git+https://github.com/dudykr/oss.git"
   },
   "bugs": {
-    "url": "https://github.com/dudykr/js-utils/issues"
+    "url": "https://github.com/dudykr/oss/issues"
   },
   "license": "Apache-2.0",
   "publishConfig": {
