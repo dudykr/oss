@@ -4,10 +4,7 @@
   "version": "0.0.1",
   "description": "CLI for Dudy cloud services",
   "main": "lib/index.js",
-  "scripts": {
-    "prepublishOnly": "turbo run build:tsc",
-    "build:tsc": "tsc"
-  },
+  "scripts": {},
   "keywords": [],
   "author": "강동윤 <kdy1997.dev@gmail.com>",
   "repository": {
