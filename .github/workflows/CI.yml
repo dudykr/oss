@@ -10,6 +10,10 @@ on:
 env:
   CI: 1
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: "${{ github.event_name == 'pull_request' }}"
+
 jobs:
   test-node:
     name: Build and Test
