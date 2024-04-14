@@ -68,10 +68,20 @@ jobs:
       - name: Setup Node.js
         uses: ./.github/actions/setup-node
 
+      - name: Configure git
+        run: |
+          git config --global user.email "bot@swc.rs"
+          git config --global user.name "SWC Bot"
+
+      - uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.BOT_SSH_PRIVATE_KEY }}
+
       - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1
         with:
+          setupGitUser: false
           publish: pnpm publish -r
         env:
           GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
