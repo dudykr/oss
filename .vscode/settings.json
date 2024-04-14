@@ -1,21 +1,34 @@
 {
-  "files.exclude": {
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true,
-    "**/Thumbs.db": true,
-    "**/.next": true,
-    "**/.turbo": true,
-    "**/.vercel": true,
-    "**/.swc": true
-  },
   "editor.formatOnSave": true,
   "[typescript]": {
     "editor.formatOnSave": true
   },
+  "emmet.showAbbreviationSuggestions": false,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
-  }
+    "source.organizeImports": "explicit"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["tv\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
+  ],
+  "typescript.preferences.importModuleSpecifier": "shortest",
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "eslint.workingDirectories": [
+    {
+      "pattern": "apps/*/"
+    },
+    {
+      "pattern": "docs/*/"
+    },
+    {
+      "pattern": "pacakges/*/"
+    }
+  ],
+  "emmet.showExpandedAbbreviation": "never",
+  "explorer.excludeGitIgnore": true,
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+  "typescript.preferences.autoImportFileExcludePatterns": [
+    "node_modules/@radix-ui/**"
+  ],
+  "rust-analyzer.showUnlinkedFileNotification": false
 }
