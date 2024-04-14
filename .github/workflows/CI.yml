@@ -25,6 +25,14 @@ jobs:
         with:
           fetch-depth: 2
 
+      - name: Cache turbo build setup
+        uses: actions/cache@v3
+        with:
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-
+
       - name: Setup Node.js
         uses: ./.github/actions/setup-node
 
@@ -35,7 +43,7 @@ jobs:
 
       - uses: browser-actions/setup-firefox@v1
 
-      - run: pnpm turbo run test:ci
+      - run: pnpm turbo run --cache-dir='.turbo' test:ci
 
   ci-done:
     name: CI Done
