@@ -87,7 +87,8 @@ export {
 `app/api/[...trpc]/route.ts`:
 
 ```ts
-import { NextApiRequest, NextApiResponse } from "next";
+import { createContext } from "@api/cloud-core-client";
+import { cliPushRouter } from "index";
 import { createOpenApiNextAppHandler } from "next-trpc-openapi";
 
 const handler = createOpenApiNextAppHandler({
@@ -95,6 +96,8 @@ const handler = createOpenApiNextAppHandler({
   router: appRouter,
   // Your trpc createContext
   createContext,
+  responseMeta: undefined,
+  onError: undefined,
 });
 
 export default handler;
