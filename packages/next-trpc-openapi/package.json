@@ -1,6 +1,6 @@
 {
   "name": "next-trpc-openapi",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Expose your trpc endpoints as openapi API endpoints",
   "scripts": {
     "build:tsc": "tsc",
