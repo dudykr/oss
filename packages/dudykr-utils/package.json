@@ -1,10 +1,9 @@
 {
-  "name": "dudy",
-  "version": "0.0.2",
-  "description": "CLI for Dudy cloud services",
-  "main": "lib/index.js",
+  "name": "@dudykr/utils",
+  "private": false,
+  "version": "0.1.0",
+  "sideEffects": false,
   "scripts": {},
-  "keywords": [],
   "author": "강동윤 <kdy1997.dev@gmail.com>",
   "repository": {
     "type": "git",
@@ -18,7 +17,8 @@
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
-  "devDependencies": {},
-  "dependencies": {},
-  "type": "module"
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.5.0",
+    "typescript": "5.1.6"
+  }
 }
