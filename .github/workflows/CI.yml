@@ -37,6 +37,16 @@ jobs:
 
       - run: pnpm turbo run test:ci
 
+  ci-done:
+    name: CI Done
+    needs:
+      - test-node
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit 1
+        if: ${{ always() && (contains(needs.*.result, 'failure') || contains(needs.*.result, 'skipped') || contains(needs.*.result, 'cancelled')) }}
+
   publish-npm:
     name: Publish to npm
     runs-on: ubuntu-latest
@@ -51,13 +61,3 @@ jobs:
         uses: ./.github/actions/setup-node
 
       - run: pnpm publish -r --access public
-
-  ci-done:
-    name: CI Done
-    needs:
-      - test-node
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - run: exit 1
-        if: ${{ always() && (contains(needs.*.result, 'failure') || contains(needs.*.result, 'skipped') || contains(needs.*.result, 'cancelled')) }}
