@@ -7,8 +7,7 @@
     "prepublishOnly": "turbo run build:tsc",
     "build:tsc": "tsc",
     "build": "true",
-    "test": "jest --detectOpenHandles --no-cache",
-    "test:ci": "cross-env CI=1 jest --detectOpenHandles --no-cache --ci"
+    "test": "jest --detectOpenHandles --no-cache"
   },
   "keywords": [],
   "author": "강동윤 <kdy1997.dev@gmail.com>",

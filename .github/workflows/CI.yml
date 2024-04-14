@@ -47,7 +47,7 @@ jobs:
 
       - uses: browser-actions/setup-firefox@v1
 
-      - run: pnpm turbo run --cache-dir='.turbo' test:ci
+      - run: pnpm turbo run --cache-dir='.turbo' test
 
   ci-done:
     name: CI Done
