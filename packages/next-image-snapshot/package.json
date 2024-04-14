@@ -34,7 +34,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "jest-expect-image": "link:../jest-expect-image",
+    "jest-expect-image": "workspace:^",
     "selenium-webdriver": "^4.11.1",
     "wait-port": "^1.0.4"
   },
