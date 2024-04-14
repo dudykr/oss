@@ -166,7 +166,7 @@ importers:
   packages/next-image-snapshot:
     dependencies:
       jest-expect-image:
-        specifier: link:../jest-expect-image
+        specifier: workspace:^
         version: link:../jest-expect-image
       selenium-webdriver:
         specifier: ^4.11.1
