@@ -1,7 +1,6 @@
 {
   "name": "dudy",
-  "packageManager": "pnpm@8.6.3",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "CLI for Dudy cloud services",
   "main": "lib/index.js",
   "scripts": {},
