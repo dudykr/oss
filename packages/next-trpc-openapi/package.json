@@ -1,0 +1,32 @@
+{
+  "name": "next-trpc-openapi",
+  "version": "0.1.1",
+  "description": "Expose your trpc endpoints as openapi API endpoints",
+  "scripts": {
+    "build:tsc": "tsc",
+    "prepublishOnly": "turbo run build:tsc"
+  },
+  "author": "강동윤 <kdy1997.dev@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dudykr/oss.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dudykr/oss/issues"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "dependencies": {
+    "@trpc/server": "^10.45.2",
+    "trpc-openapi": "^1.2.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "20.11.16",
+    "next": "^14.2.1",
+    "typescript": "^5.4.5"
+  }
+}
