@@ -11,7 +11,7 @@ env:
   CI: 1
 
 jobs:
-  build:
+  test-node:
     name: Build and Test
     timeout-minutes: 15
     runs-on: ubuntu-latest
@@ -36,3 +36,28 @@ jobs:
       - uses: browser-actions/setup-firefox@v1
 
       - run: pnpm turbo run test:ci
+
+  publish-npm:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    needs: test-node
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: ./.github/actions/setup-node
+
+      - run: pnpm publish -r --access public
+
+  ci-done:
+    name: CI Done
+    needs:
+      - test-node
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit 1
+        if: ${{ always() && (contains(needs.*.result, 'failure') || contains(needs.*.result, 'skipped') || contains(needs.*.result, 'cancelled')) }}
