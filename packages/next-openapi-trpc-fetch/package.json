@@ -2,7 +2,10 @@
   "name": "next-openapi-trpc-fetch",
   "version": "0.1.0",
   "description": "Expose your trpc endpoints as openapi API endpoints",
-  "scripts": {},
+  "scripts": {
+    "build:tsc": "tsc",
+    "prepublishOnly": "turbo run build:tsc"
+  },
   "author": "강동윤 <kdy1997.dev@gmail.com>",
   "repository": {
     "type": "git",
@@ -15,5 +18,9 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
+  },
+  "dependencies": {
+    "trpc-openapi": "^1.2.0",
+    "zod": "^3.22.4"
   }
 }
