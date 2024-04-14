@@ -1,6 +1,5 @@
 {
   "name": "next-image-snapshot",
-  "packageManager": "pnpm@8.6.3",
   "version": "0.1.5",
   "description": "",
   "main": "index.js",
