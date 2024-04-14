@@ -1,7 +1,7 @@
 {
   "name": "@dudykr/utils",
   "private": false,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "sideEffects": false,
   "scripts": {},
   "author": "강동윤 <kdy1997.dev@gmail.com>",

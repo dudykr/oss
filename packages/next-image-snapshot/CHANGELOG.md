@@ -1,5 +1,13 @@
 # next-image-snapshot
 
+## 0.1.6
+
+### Patch Changes
+
+- bb3f050: Organize monorepo
+- Updated dependencies [bb3f050]
+  - jest-expect-image@0.1.6
+
 ## 0.1.4
 
 ### Patch Changes
