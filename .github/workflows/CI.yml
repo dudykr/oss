@@ -11,7 +11,7 @@ env:
   CI: 1
 
 jobs:
-  build:
+  test-node:
     name: Build and Test
     timeout-minutes: 15
     runs-on: ubuntu-latest
@@ -21,35 +21,20 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 2
 
-      - name: Install Node.js
-        uses: actions/setup-node@v3
+      - name: Cache turbo build setup
+        uses: actions/cache@v3
         with:
-          node-version: 18
-
-      - uses: pnpm/action-setup@v2.0.1
-        with:
-          version: 8.6.3
-          run_install: false
-
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - uses: actions/cache@v3
-        name: Setup pnpm cache
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          path: .turbo
+          key: ${{ runner.os }}-turbo-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+            ${{ runner.os }}-turbo-
 
-      # Install dependencies
-      - run: pnpm install
+      - name: Setup Node.js
+        uses: ./.github/actions/setup-node
 
       - uses: nanasess/setup-chromedriver@v2
 
@@ -58,4 +43,36 @@ jobs:
 
       - uses: browser-actions/setup-firefox@v1
 
-      - run: pnpm turbo run test:ci
+      - run: pnpm turbo run --cache-dir='.turbo' test:ci
+
+  ci-done:
+    name: CI Done
+    needs:
+      - test-node
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit 1
+        if: ${{ always() && (contains(needs.*.result, 'failure') || contains(needs.*.result, 'skipped') || contains(needs.*.result, 'cancelled')) }}
+
+  publish-npm:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+    needs: ci-done
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: ./.github/actions/setup-node
+
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: pnpm publish -r
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
