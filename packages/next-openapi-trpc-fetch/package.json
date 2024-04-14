@@ -1,0 +1,19 @@
+{
+  "name": "next-openapi-trpc-fetch",
+  "version": "0.1.0",
+  "description": "Expose your trpc endpoints as openapi API endpoints",
+  "scripts": {},
+  "author": "강동윤 <kdy1997.dev@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dudykr/oss.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dudykr/oss/issues"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  }
+}
