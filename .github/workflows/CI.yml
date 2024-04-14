@@ -76,6 +76,7 @@ jobs:
         run: |
           git config --global user.email "bot@swc.rs"
           git config --global user.name "SWC Bot"
+          git remote set-url origin git@github.com:dudykr/oss.git
 
       - uses: webfactory/ssh-agent@v0.5.4
         with:
