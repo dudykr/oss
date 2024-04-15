@@ -1,5 +1,5 @@
 {
-  "name": "swc-plugin-registry",
+  "name": "swc-plugins",
   "version": "0.1.0",
   "private": true,
   "scripts": {
