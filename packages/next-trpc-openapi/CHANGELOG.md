@@ -1,5 +1,11 @@
 # next-trpc-openapi
 
+## 0.1.3
+
+### Patch Changes
+
+- 81ba74a: Fix imports
+
 ## 0.1.2
 
 ### Patch Changes
