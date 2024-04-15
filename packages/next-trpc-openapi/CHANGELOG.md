@@ -1,5 +1,11 @@
 # next-trpc-openapi
 
+## 0.1.4
+
+### Patch Changes
+
+- 44507bc: Fix build
+
 ## 0.1.3
 
 ### Patch Changes

@@ -71,9 +71,9 @@ export function createOpenApiNextAppHandler<TRouter extends OpenApiRouter>(
       // input should stay undefined if z.void()
       if (!instanceofZodTypeLikeVoid(unwrappedSchema)) {
         input = {
-          ...(useBody
+          ...((useBody
             ? await req.json()
-            : queryParamsToMap(req.nextUrl.searchParams)),
+            : queryParamsToMap(req.nextUrl.searchParams)) as any),
           ...pathInput,
         };
       }
