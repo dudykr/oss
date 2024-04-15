@@ -1,7 +1,7 @@
 import { OpenApiMethod, OpenApiRouter } from "trpc-openapi";
 import { OpenApiProcedure } from "trpc-openapi/dist/types";
-import { forEachOpenApiProcedure } from "../procedures";
-import { getPathRegExp, normalizePath } from "./paths";
+import { forEachOpenApiProcedure } from "../procedures.js";
+import { getPathRegExp, normalizePath } from "./paths.js";
 
 export const createProcedureCache = (router: OpenApiRouter) => {
   const procedureCache = new Map<

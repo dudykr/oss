@@ -1,7 +1,5 @@
 import { AnyProcedure, TRPCError } from "@trpc/server";
-import { TRPC_ERROR_CODE_HTTP_STATUS, getErrorFromUnknown } from "errors";
 import { NextRequest, NextResponse } from "next/server";
-import { getInputOutputParsers } from "procedures";
 import { CreateOpenApiNodeHttpHandlerOptions } from "trpc-openapi/dist/adapters/node-http/core";
 import {
   OpenApiErrorResponse,
@@ -15,11 +13,13 @@ import {
   unwrapZodType,
   zodSupportsCoerce,
 } from "trpc-openapi/dist/utils/zod";
-import { acceptsRequestBody } from "utils/methods";
-import { normalizePath } from "utils/paths";
-import { createProcedureCache } from "utils/procedures";
 import { Context, createContext } from "vm";
 import { ZodError, z } from "zod";
+import { TRPC_ERROR_CODE_HTTP_STATUS, getErrorFromUnknown } from "./errors.js";
+import { getInputOutputParsers } from "./procedures.js";
+import { acceptsRequestBody } from "./utils/methods.js";
+import { normalizePath } from "./utils/paths.js";
+import { createProcedureCache } from "./utils/procedures.js";
 
 export type CreateOpenApiNextAppHandlerOptions<TRouter extends OpenApiRouter> =
   Omit<
