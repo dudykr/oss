@@ -1,9 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "pipeline": {
-    "topo": {
-      "dependsOn": ["^topo"]
-    },
+  "globalEnv": ["TEST_REAL_DB"],
+  "tasks": {
     "dev": {
       "dependsOn": ["db:build", "db:push", "^build:tsc"],
       "cache": false,
@@ -11,16 +9,17 @@
     },
     "db:push": {
       "inputs": ["prisma/schema.prisma"],
-      "outputMode": "new-only",
-      "cache": false
+      "cache": false,
+      "outputLogs": "new-only"
     },
     "db:build": {
       "inputs": ["prisma/schema.prisma"],
-      "outputMode": "new-only",
-      "cache": false
+      "outputs": ["lib/generated/**/*.ts"],
+      "cache": false,
+      "outputLogs": "new-only"
     },
     "build:next": {
-      "dependsOn": ["topo", "db:build", "^build:tsc"],
+      "dependsOn": ["db:build", "build:tsc"],
       "inputs": [
         "package.json",
         "tsconfig.json",
@@ -28,13 +27,14 @@
         "tailwind.config.ts",
         "!.next/**",
         "**/*.ts",
-        "**/*.tsx"
+        "**/*.tsx",
+        "**/*.md"
       ],
       "outputs": [".next/**", "out/**"],
-      "outputMode": "new-only"
+      "outputLogs": "new-only"
     },
     "build:tsc": {
-      "dependsOn": ["topo", "db:build", "^build:tsc"],
+      "dependsOn": ["db:build", "^build:tsc"],
       "inputs": [
         "**/*.ts",
         "**/*.tsx",
@@ -46,39 +46,39 @@
         "!*/**/*.e2e.tsx",
         "!*/**/*.cy.ts"
       ],
-      "outputMode": "new-only"
+      "outputLogs": "new-only",
+      "cache": false
     },
     "build": {
-      "dependsOn": ["topo", "build:next", "db:build", "build:tsc"]
+      "dependsOn": ["db:build", "build:tsc", "build:next"]
+    },
+    "test:install": {
+      "outputLogs": "new-only",
+      "cache": false
     },
     "test:unit": {
       "dependsOn": ["build:tsc", "db:build"],
-      "inputs": ["**/*.test.ts", "**/*.test.tsx", "vitest.config.mts"],
-      "outputMode": "new-only"
+      "inputs": ["**/*.test.ts", "**/*.test.tsx"],
+      "outputLogs": "new-only"
     },
     "test:db:push": {
       "inputs": ["prisma/schema.prisma"],
-      "outputMode": "new-only",
-      "cache": false
-    },
-    "test:integration": {
-      "dependsOn": ["build:tsc", "db:build", "test:db:push"],
-      "inputs": ["**/*.test.ts", "**/*.test.tsx", "vitest.config.mts"],
-      "outputMode": "new-only"
+      "cache": false,
+      "outputLogs": "new-only"
     },
     "test:e2e": {
-      "dependsOn": ["build:tsc", "db:build", "test:db:push"],
+      "dependsOn": ["build", "test:db:push", "test:install"],
       "inputs": [
         "**/*.e2e.ts",
         "**/*.e2e.tsx",
         "**/*.cy.ts",
         "cypress.config.js"
       ],
-      "outputMode": "new-only"
+      "outputLogs": "new-only"
     },
     "test": {
-      "dependsOn": ["test:unit", "test:integration", "test:e2e"],
-      "outputMode": "new-only"
+      "dependsOn": ["test:unit", "test:e2e", "test:e2e"],
+      "outputLogs": "new-only"
     },
     "test:watch": {
       "cache": false,
