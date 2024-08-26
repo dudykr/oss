@@ -2,6 +2,10 @@ import { db } from "@/lib/prisma";
 import fs from "node:fs/promises";
 
 export default async function Page() {
+  if (process.env.NODE_ENV === "production") {
+    return <div>Not allowed</div>;
+  }
+
   const ranges: { min: string; max: string }[] = JSON.parse(
     await fs.readFile("./data/ranges.json", "utf8")
   );
