@@ -4,8 +4,8 @@ import { SessionProvider } from "next-auth/react";
 import { Manrope } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
 import { PropsWithChildren } from "react";
-import "../styles/globals.css";
 import { ClientProviders } from "./client-providers";
+import "./globals.css";
 
 const fontHeading = Manrope({
   subsets: ["latin"],
