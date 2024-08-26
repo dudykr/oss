@@ -8,7 +8,7 @@ export default function Page() {
 
   return (
     <div>
-      <h1>Compat Ranges</h1>
+      <h1 className="text-2xl font-bold">Compat Ranges</h1>
       <ul>
         {ranges.map((range) => (
           <li key={range.id}>

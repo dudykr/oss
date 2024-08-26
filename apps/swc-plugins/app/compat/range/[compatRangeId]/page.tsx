@@ -13,12 +13,12 @@ export default function Page({
 
   return (
     <div>
-      <h1>
+      <h1 className="text-2xl font-bold">
         <kbd>swc_core</kbd>@<kbd>{compatRange.from}</kbd> -{" "}
         <kbd>{compatRange.to}</kbd>
       </h1>
 
-      <h2>Runtimes</h2>
+      <h2 className="text-xl font-bold">Runtimes</h2>
       <ul>
         {compatRange.runtimes.map((runtime) => (
           <li key={runtime.name}>
@@ -28,7 +28,7 @@ export default function Page({
         ))}
       </ul>
 
-      <h2>Plugins</h2>
+      <h2 className="text-xl font-bold">Plugins</h2>
       <ul>
         {compatRange.plugins.map((plugin) => (
           <li key={plugin.name}>
