@@ -5,43 +5,63 @@ import path from "path";
 import toml from "toml";
 import { $ } from "zx";
 
-const runtimeDir = process.argv[2];
+const runtimeName = process.argv[2];
+const runtimeDir = process.argv[3];
 
-if (!runtimeDir) {
-  console.error("Runtime directory is required");
+if (!runtimeName || !runtimeDir) {
+  console.error("Runtime name and directory are required");
   process.exit(1);
 }
+
 const $$ = $({ cwd: runtimeDir });
 
 const repositoryRoot = (await $$`git rev-parse --show-toplevel`.text()).trim();
 const cargoLockPath = path.resolve(`${runtimeDir}/Cargo.lock`);
 const relativePathToCargoLock = path.relative(repositoryRoot, cargoLockPath);
 
+console.log("Runtime name:", runtimeName);
 console.log("Runtime dir:", runtimeDir);
 console.log("Repository root:", repositoryRoot);
 console.log("Cargo.lock path:", cargoLockPath);
 console.log("Relative path to Cargo.lock:", relativePathToCargoLock);
 
-if (!relativePathToCargoLock.startsWith("..")) {
-  console.error(
-    "Runtime directory is not a subdirectory of the repository root"
-  );
-  process.exit(1);
-}
-
 // Get all git tags
-
 const gitTags = (await $$`git tag`.text()).split("\n");
+
+const data = {
+  runtime: runtimeName,
+  versions: [],
+};
 
 // For each tag, get the content of `${runtimeDir}/Cargo.lock`.
 for (const tag of gitTags) {
   try {
     const cargoLock =
       await $$`git show ${tag}:${relativePathToCargoLock}`.text();
-    console.log(cargoLock);
 
     const parsed = toml.parse(cargoLock);
+    const packages = parsed.package;
+
+    for (const pkg of packages) {
+      if (pkg.name === "swc_core") {
+        const swcCoreVersion = pkg.version;
+
+        data.versions.push({
+          version: tag,
+          swcCoreVersion,
+        });
+        console.log(`Found swc_core version ${swcCoreVersion} for tag ${tag}`);
+      }
+    }
   } catch (e) {
     console.error(`Failed to parse Cargo.lock for tag ${tag}: ${e}`);
   }
 }
+
+await fetch("http://localhost:50000/import/runtime", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(data),
+});

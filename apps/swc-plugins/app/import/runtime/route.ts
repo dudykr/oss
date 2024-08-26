@@ -38,6 +38,10 @@ export async function POST(req: NextRequest) {
     const compatRange = await api.compatRange.byVersion({
       version: version.swcCoreVersion,
     });
+    if (!compatRange) {
+      console.log(`No compat range found for ${version.swcCoreVersion}`);
+      continue;
+    }
 
     await db.swcRuntimeVersion.upsert({
       where: {
