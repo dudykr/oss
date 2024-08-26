@@ -68,6 +68,7 @@
     "react-hook-form": "^7.52.0",
     "react-resizable-panels": "^2.1.1",
     "recharts": "^2.12.7",
+    "semver": "^7.6.3",
     "sharp": "^0.33.2",
     "sonner": "^1.5.0",
     "superjson": "^2.2.1",
