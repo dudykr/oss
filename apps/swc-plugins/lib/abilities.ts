@@ -1,9 +1,9 @@
+import { Abilities, User } from "@/lib/base";
 import {
   TeamMemberRoleSchema,
   TeamMembership,
   UserRoleSchema,
 } from "@/lib/prisma";
-import { Abilities, User } from "@dudykr/api-base-next";
 import { TRPCError } from "@trpc/server";
 
 export function defineAbilitiesFor({

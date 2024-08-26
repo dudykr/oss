@@ -1,13 +1,13 @@
 import { getCurrentUser } from "@/lib/api/auth";
 import { apiRouter } from "@/lib/api/router";
-import { TeamMemberRoleSchema, TeamMemberRoleType, db } from "@/lib/prisma";
 import {
   Abilities,
   Context,
   User,
   UserRoleSchema,
   createCallerFactory,
-} from "@dudykr/api-base-next";
+} from "@/lib/base";
+import { TeamMemberRoleSchema, TeamMemberRoleType, db } from "@/lib/prisma";
 import { TRPCError } from "@trpc/server";
 import {
   FetchCreateContextFnOptions,
@@ -25,7 +25,7 @@ export const handler = (req: Request) =>
   });
 
 async function createContext(
-  params?: FetchCreateContextFnOptions | { isAdmin: boolean },
+  params?: FetchCreateContextFnOptions | { isAdmin: boolean }
 ): Promise<Context> {
   if (!params) {
     console.warn("No params provided to createContext");
@@ -90,7 +90,7 @@ export function defineAbilitiesFor({ user }: { user: User | null }): Abilities {
       });
 
       return membership?.role ?? null;
-    },
+    }
   );
 
   const isTeamOwner = async (teamId: string) =>

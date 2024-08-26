@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth";
+import { User } from "@/lib/base";
 import { UserRole } from "@/lib/generated/prisma";
 import { db } from "@/lib/prisma";
-import { User } from "@dudykr/api-base-next";
 
 export async function getCurrentUser(): Promise<User | null> {
   const session = await auth();
