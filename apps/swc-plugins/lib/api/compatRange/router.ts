@@ -122,11 +122,7 @@ export const compatRangeRouter = router({
       });
 
       for (const range of versions) {
-        if (semver.lt(version, range.from)) {
-          continue;
-        }
-
-        if (semver.gte(version, range.to)) {
+        if (semver.gt(version, range.from) && semver.lt(version, range.to)) {
           return range;
         }
       }
