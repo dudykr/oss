@@ -1,10 +1,9 @@
-"use client";
-
-import { apiClient } from "@/lib/trpc/web-client";
+import { createCaller } from "@/lib/server";
 import Link from "next/link";
 
-export default function Page() {
-  const [ranges] = apiClient.compatRange.list.useSuspenseQuery();
+export default async function Page() {
+  const api = await createCaller();
+  const ranges = await api.compatRange.list();
 
   return (
     <div>
@@ -24,3 +23,4 @@ export default function Page() {
 }
 
 export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
