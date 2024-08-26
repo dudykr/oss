@@ -27,7 +27,7 @@ console.log("Cargo.lock path:", cargoLockPath);
 console.log("Relative path to Cargo.lock:", relativePathToCargoLock);
 
 // Get all git tags
-const gitTags = (await $$`git tag`.text()).split("\n");
+const gitTags = (await $$`git tag`.text()).trim().split("\n").reverse();
 
 const data = {
   runtime: runtimeName,
