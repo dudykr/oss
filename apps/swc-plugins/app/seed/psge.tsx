@@ -8,9 +8,30 @@ export default async function Page() {
 
   for (const { min, max } of ranges) {
     await db.compatRange.upsert({
-      data: {
-        min,
-        max,
+      where: {
+        from_to: {
+          from: min,
+          to: max,
+        },
+      },
+      update: {},
+      create: {
+        from: min,
+        to: max,
+      },
+    });
+  }
+
+  const runtimes = ["@swc/core", "next", "rspack"];
+
+  for (const runtime of runtimes) {
+    await db.swcRuntime.upsert({
+      where: {
+        name: runtime,
+      },
+      update: {},
+      create: {
+        name: runtime,
       },
     });
   }
