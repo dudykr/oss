@@ -176,14 +176,17 @@ model SwcPlugin {
 }
 
 model SwcPluginVersion {
-  id            BigInt      @id @default(autoincrement())
-  plugin        SwcPlugin   @relation(fields: [pluginId], references: [id], onDelete: Cascade)
-  pluginId      BigInt
-  version       String
-  compatRange   CompatRange @relation(fields: [compatRangeId], references: [id])
-  compatRangeId BigInt
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  id             BigInt      @id @default(autoincrement())
+  plugin         SwcPlugin   @relation(fields: [pluginId], references: [id], onDelete: Cascade)
+  pluginId       BigInt
+  /// The version of the plugin.
+  version        String
+  /// The version of `swc_core` used by the plugin.
+  swcCoreVersion String?
+  compatRange    CompatRange @relation(fields: [compatRangeId], references: [id])
+  compatRangeId  BigInt
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
 
   @@unique([pluginId, version])
 }
