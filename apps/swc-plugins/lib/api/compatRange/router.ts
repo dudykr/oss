@@ -96,6 +96,43 @@ export const compatRangeRouter = router({
         runtimes,
       };
     }),
+
+  byVersion: publicProcedure
+    .input(
+      z.object({
+        version: z.string(),
+      })
+    )
+    .output(
+      z.nullable(
+        z.object({
+          id: z.bigint(),
+          from: z.string(),
+          to: z.string(),
+        })
+      )
+    )
+    .query(async ({ ctx, input: { version } }) => {
+      const versions = await db.compatRange.findMany({
+        select: {
+          id: true,
+          from: true,
+          to: true,
+        },
+      });
+
+      for (const range of versions) {
+        if (semver.lt(version, range.from)) {
+          continue;
+        }
+
+        if (semver.gte(version, range.to)) {
+          return range;
+        }
+      }
+
+      return null;
+    }),
 });
 
 function merge(ranges: { name: string; version: string }[]): VersionRange[] {
