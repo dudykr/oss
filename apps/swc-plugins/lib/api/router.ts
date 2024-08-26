@@ -1,12 +1,10 @@
-import { publicProcedure, router } from "@/lib/base";
+import { router } from "@/lib/base";
 
 import { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
-import { z } from "zod";
+import { userRouter } from "./users/router";
 
 export const apiRouter = router({
-  hello: publicProcedure.input(z.string()).query(({ input }) => {
-    return `Hello ${input}`;
-  }),
+  users: userRouter,
 });
 
 export type ApiRouter = typeof apiRouter;
