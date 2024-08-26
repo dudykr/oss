@@ -5,3 +5,5 @@ export default async function Page() {
     await fs.readFile("./data/.cache/plugins.json", "utf8")
   );
 }
+
+export const dynamic = "force-dynamic";
