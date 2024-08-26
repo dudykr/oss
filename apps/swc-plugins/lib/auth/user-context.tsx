@@ -5,13 +5,13 @@ import { apiClient } from "@/lib/trpc/web-client";
 import { useRouter } from "next/navigation";
 import { PropsWithChildren, createContext, useEffect, useState } from "react";
 
-type User = ApiOutput["users"]["me"];
+type User = ApiOutput["users"]["me"] | null;
 // TODO
 // type TeamMembership = NonNullable<ApiOutput["teams"]["myTeams"][number]>;
 type TeamMembership = any;
 
 type UserContext = {
-  user: User | null;
+  user: User;
   reloadUser: () => Promise<void>;
   logout: () => Promise<void>;
   loaded: boolean;
