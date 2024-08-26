@@ -6,10 +6,12 @@ import { useRouter } from "next/navigation";
 import { PropsWithChildren, createContext, useEffect, useState } from "react";
 
 type User = ApiOutput["users"]["me"];
-type TeamMembership = NonNullable<ApiOutput["teams"]["myTeams"][number]>;
+// TODO
+// type TeamMembership = NonNullable<ApiOutput["teams"]["myTeams"][number]>;
+type TeamMembership = any;
 
 type UserContext = {
-  user: User;
+  user: User | null;
   reloadUser: () => Promise<void>;
   logout: () => Promise<void>;
   loaded: boolean;
@@ -58,7 +60,7 @@ export function UserContextProvider({
   };
 
   const logout = async () => {
-    router.replace("/auth/signout");
+    router.replace("/api/auth/signout");
   };
 
   useEffect(() => {
