@@ -1,6 +1,7 @@
 import { router } from "@/lib/base";
 
 import { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
+import { compatRangeRouter } from "./compatRange/router";
 import { userRouter } from "./users/router";
 
 export const apiRouter = router({
