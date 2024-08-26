@@ -34,6 +34,13 @@ export async function POST(req: NextRequest) {
   });
   const api = await createCaller();
 
+  const items: {
+    runtimeId: bigint;
+    version: string;
+    compatRangeId: bigint;
+    swcCoreVersion: string;
+  }[] = [];
+
   for (const version of versions) {
     const compatRange = await api.compatRange.byVersion({
       version: version.swcCoreVersion,
@@ -43,22 +50,17 @@ export async function POST(req: NextRequest) {
       continue;
     }
 
-    await db.swcRuntimeVersion.upsert({
-      where: {
-        runtimeId_version: {
-          runtimeId: rt.id,
-          version: version.version,
-        },
-      },
-      create: {
-        runtimeId: rt.id,
-        version: version.version,
-        swcCoreVersion: version.swcCoreVersion,
-        compatRangeId: compatRange.id,
-      },
-      update: {},
+    items.push({
+      runtimeId: rt.id,
+      version: version.version,
+      compatRangeId: compatRange.id,
+      swcCoreVersion: version.swcCoreVersion,
     });
   }
+
+  await db.swcRuntimeVersion.createMany({
+    data: items,
+  });
 
   return NextResponse.json({
     ok: true,
