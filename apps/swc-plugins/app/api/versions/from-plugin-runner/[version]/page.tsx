@@ -1,4 +1,4 @@
-export async function Page({
+export default async function Page({
   params: { version },
 }: {
   params: { version: string };
