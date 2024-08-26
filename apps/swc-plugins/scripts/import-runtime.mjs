@@ -62,7 +62,7 @@ for (const tag of gitTags) {
     }
 
     // Send the data to the server
-    if (data.versions.length >= 20) {
+    if (data.versions.length >= 10) {
       await fetch("http://localhost:50000/import/runtime", {
         method: "POST",
         headers: {
