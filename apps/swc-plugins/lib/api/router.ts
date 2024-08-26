@@ -5,6 +5,8 @@ import { userRouter } from "./users/router";
 
 export const apiRouter = router({
   users: userRouter,
+
+  compatRange: compatRangeRouter,
 });
 
 export type ApiRouter = typeof apiRouter;
