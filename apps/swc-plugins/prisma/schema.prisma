@@ -134,23 +134,50 @@ model TeamInvitation {
 
 /// The range of versions of the `swc_core` that a plugin is compatible with.
 model CompatRange {
-  id        BigInt   @id @default(autoincrement())
-  from      String
-  to        String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id               BigInt              @id @default(autoincrement())
+  from             String
+  to               String
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+  runtimes         SwcRuntimeVersion[]
+  SwcPluginVersion SwcPluginVersion[]
 }
 
+/// Plugin runner
 model SwcRuntime {
-  id        BigInt   @id @default(autoincrement())
+  id        BigInt              @id @default(autoincrement())
   name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+  versions  SwcRuntimeVersion[]
+}
+
+model SwcRuntimeVersion {
+  id            BigInt      @id @default(autoincrement())
+  runtime       SwcRuntime  @relation(fields: [runtimeId], references: [id], onDelete: Cascade)
+  runtimeId     BigInt
+  version       String
+  compatRange   CompatRange @relation(fields: [compatRangeId], references: [id])
+  compatRangeId BigInt
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 }
 
 model SwcPlugin {
-  id        BigInt   @id @default(autoincrement())
+  id        BigInt             @id @default(autoincrement())
   name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+  versions  SwcPluginVersion[]
+}
+
+model SwcPluginVersion {
+  id            BigInt      @id @default(autoincrement())
+  plugin        SwcPlugin   @relation(fields: [pluginId], references: [id], onDelete: Cascade)
+  pluginId      BigInt
+  version       String
+  compatRange   CompatRange @relation(fields: [compatRangeId], references: [id])
+  compatRangeId BigInt
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 }
