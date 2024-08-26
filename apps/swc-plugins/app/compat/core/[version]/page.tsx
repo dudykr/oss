@@ -8,7 +8,9 @@ export default function Page({
 }: {
   params: { version: string };
 }) {
-  const [compatRange] = apiClient.compatRange.byVersion.useSuspenseQuery({});
+  const [compatRange] = apiClient.compatRange.byVersion.useSuspenseQuery({
+    version,
+  });
 
   return (
     <div>
