@@ -6,9 +6,7 @@ import { httpBatchLink } from "@trpc/client";
 import { PropsWithChildren, useState } from "react";
 import superjson from "superjson";
 
-export function ApiClientProvider({
-  children,
-}: PropsWithChildren<Record<string, never>>) {
+export function ApiClientProvider({ children }: PropsWithChildren<{}>) {
   const [queryClient] = useState(
     () =>
       new QueryClient({
