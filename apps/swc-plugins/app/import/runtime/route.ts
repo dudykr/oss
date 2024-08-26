@@ -52,9 +52,11 @@ export async function POST(req: NextRequest) {
 
     items.push({
       runtimeId: rt.id,
-      version: version.version,
+      // Just to ensure it's a valid semver
+      version: version.version.replace("v", ""),
       compatRangeId: compatRange.id,
-      swcCoreVersion: version.swcCoreVersion,
+      // Just to ensure it's a valid semver
+      swcCoreVersion: version.swcCoreVersion.replace("v", ""),
     });
   }
 
