@@ -2,6 +2,7 @@
 //
 // Run this script using an absolute path to the runtime directory.
 import path from "path";
+import semver from "semver";
 import toml from "toml";
 import { $ } from "zx";
 
@@ -35,6 +36,12 @@ const data = {
 
 // For each tag, get the content of `${runtimeDir}/Cargo.lock`.
 for (const tag of gitTags) {
+  let tagVersion = tag.replace("v", "");
+  if (!semver.valid(tagVersion)) {
+    console.log(`Skipping tag ${tag} because it is not a valid semver`);
+    continue;
+  }
+
   try {
     const cargoLock =
       await $$`git show ${tag}:${relativePathToCargoLock}`.text();
@@ -47,7 +54,7 @@ for (const tag of gitTags) {
         const swcCoreVersion = pkg.version;
 
         data.versions.push({
-          version: tag,
+          version: tagVersion,
           swcCoreVersion,
         });
         console.log(`Found swc_core version ${swcCoreVersion} for tag ${tag}`);
