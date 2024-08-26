@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 50000",
+    "db:build": "prisma generate",
+    "db:push": "prisma db push --accept-data-loss",
     "build:next": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "next dev -p 50000",
+    "lint": "next lint",
+    "start": "next start"
   },
   "dependencies": {
     "react": "^18",
