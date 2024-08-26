@@ -1,9 +1,28 @@
 "use client";
 
+import { apiClient } from "@/lib/trpc/web-client";
+import Link from "next/link";
+
 export default function Page({
   params: { version },
 }: {
   params: { version: string };
 }) {
-  return <div>Hello</div>;
+  const [compatRange] = apiClient.compatRange.byVersion.useSuspenseQuery({});
+
+  return (
+    <div>
+      {compatRange ? (
+        <>
+          <Link href={`/compat/range/${compatRange.id}`}>
+            {compatRange.from} ~ {compatRange.to}
+          </Link>
+        </>
+      ) : (
+        <>
+          <p>No compat range found</p>
+        </>
+      )}
+    </div>
+  );
 }
