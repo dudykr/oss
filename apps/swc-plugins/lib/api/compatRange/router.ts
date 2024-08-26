@@ -160,7 +160,8 @@ function merge(ranges: { name: string; version: string }[]): VersionRange[] {
  * @param newValue semver
  */
 function mergeVersion(min: string, max: string, newValue: string) {
-  const minVersion = semver.lt(min, newValue) ? min : newValue;
+  const minVersion =
+    min !== "0.0.0" && semver.lt(min, newValue) ? min : newValue;
   const maxVersion = semver.gt(max, newValue) ? max : newValue;
 
   return { min: minVersion, max: maxVersion };
