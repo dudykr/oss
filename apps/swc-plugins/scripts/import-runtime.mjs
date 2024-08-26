@@ -60,6 +60,18 @@ for (const tag of gitTags) {
         console.log(`Found swc_core version ${swcCoreVersion} for tag ${tag}`);
       }
     }
+
+    // Send the data to the server
+    if (data.versions.length >= 20) {
+      await fetch("http://localhost:50000/import/runtime", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      data.versions = [];
+    }
   } catch (e) {
     console.error(`Failed to parse Cargo.lock for tag ${tag}: ${e}`);
   }
