@@ -92,14 +92,13 @@ model Authenticator {
 }
 
 model Team {
-  id           String           @id @default(cuid())
-  name         String
-  slug         String           @unique
-  memberships  TeamMembership[]
-  subscription Subscription?
-  invitations  TeamInvitation[]
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
+  id          String           @id @default(cuid())
+  name        String
+  slug        String           @unique
+  memberships TeamMembership[]
+  invitations TeamInvitation[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
 }
 
 enum TeamMemberRole {
