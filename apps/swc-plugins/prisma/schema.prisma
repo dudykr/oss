@@ -201,10 +201,10 @@ model SwcCoreVersion {
   id              BigInt      @id @default(autoincrement())
   /// The version of the (exact) `swc_core` package.
   version         String      @unique
-  compatRange     CompatRange @relation(fields: [compatRangeId], references: [id])
-  compatRangeId   BigInt
   /// Semver range of the `swc_plugin_runner` package that is compatible with this version of `swc_core`.
   pluginRunnerReq String?
+  compatRange     CompatRange @relation(fields: [compatRangeId], references: [id])
+  compatRangeId   BigInt
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
 }
