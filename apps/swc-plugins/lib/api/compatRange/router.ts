@@ -235,7 +235,9 @@ export const compatRangeRouter = router({
                   version: rv,
                   compatRangeId: compatRange.id,
                 },
-                update: {},
+                update: {
+                  compatRangeId: compatRange.id,
+                },
               });
               console.log(`Imported swc_plugin_runner@${rv}`);
             }
