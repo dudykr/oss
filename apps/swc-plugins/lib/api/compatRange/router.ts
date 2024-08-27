@@ -1,5 +1,6 @@
 import { publicProcedure, router } from "@/lib/base";
 import { db } from "@/lib/prisma";
+import { TRPCError } from "@trpc/server";
 import semver from "semver";
 import { z } from "zod";
 import { VersionRange, VersionRangeSchema } from "./zod";
@@ -148,6 +149,12 @@ export const compatRangeRouter = router({
     .output(z.void())
     .mutation(
       async ({ ctx, input: { coreVersions, pluginRunnerVersions } }) => {
+        if (process.env.NODE_ENV === "production") {
+          throw new TRPCError({
+            code: "FORBIDDEN",
+          });
+        }
+
         const compatRanges = await db.compatRange.findMany({
           select: {
             id: true,
