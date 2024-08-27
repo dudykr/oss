@@ -4,16 +4,26 @@ import fs from "fs/promises";
 await fs.mkdir("./.cache", { recursive: true });
 
 // Fetch .cahce/swc_core.json from https://index.crates.io/sw/c_/swc_core if it doesn't exist
-if (!fs.existsSync("./.cache/swc_core.json")) {
-  const response = await fetch("https://index.crates.io/sw/c_/swc_core");
+async function load(crate) {
+  const cachePath = `./.cache/${crate}.json`;
+  try {
+    return await fs.readFile(cachePath, "utf8");
+  } catch (e) {
+    console.log(`Cache miss for ${crate}`);
+  }
+
+  const response = await fetch(`https://index.crates.io/sw/c_/${crate}`);
   const content = await response.text();
-  await fs.writeFile("./.cache/swc_core.json", content, "utf8");
+  await fs.writeFile(cachePath, content, "utf8");
+  return content;
 }
 
-// swc_core.json: https://index.crates.io/sw/c_/swc_core
-const content = await fs.readFile("./.cache/swc_core.json", "utf8");
+const [coreData, pluginRunnerData] = await Promise.all([
+  load("swc_core"),
+  load("swc_plugin_runner"),
+]);
 
-for (const line of content.split("\n")) {
+for (const line of coreData.split("\n")) {
   const data = JSON.parse(line);
 
   const pluginRunner = data.deps.find((d) => d.name === "swc_plugin_runner");
