@@ -48,13 +48,26 @@ export default function Page({
       </Table>
 
       <h2 className="text-xl font-bold">Plugins</h2>
-      <ul>
-        {compatRange.plugins.map((plugin) => (
-          <li key={plugin.name}>
-            <kbd>{plugin.name}</kbd>
-          </li>
-        ))}
-      </ul>
+
+      <Table>
+        <TableCaption>Compatible Plugins</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[200px]">Plugin</TableHead>
+            <TableHead>Minimum Version</TableHead>
+            <TableHead>Maximum Version</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {compatRange.plugins.map((plugin) => (
+            <TableRow key={plugin.name}>
+              <TableCell className="font-medium">{plugin.name}</TableCell>
+              <TableCell>{plugin.minVersion}</TableCell>
+              <TableCell>{plugin.maxVersion}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 }
