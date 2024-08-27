@@ -5,18 +5,16 @@ import semver from "semver";
 import { z } from "zod";
 import { VersionRange, VersionRangeSchema } from "./zod";
 
+export const CompatRangeSchema = z.object({
+  id: z.bigint(),
+  from: z.string(),
+  to: z.string(),
+});
+
 export const compatRangeRouter = router({
   list: publicProcedure
     .input(z.void())
-    .output(
-      z.array(
-        z.object({
-          id: z.bigint(),
-          from: z.string(),
-          to: z.string(),
-        })
-      )
-    )
+    .output(z.array(CompatRangeSchema))
     .query(async ({ ctx }) => {
       const versions = await db.compatRange.findMany({
         orderBy: {
@@ -98,21 +96,39 @@ export const compatRangeRouter = router({
       };
     }),
 
+  byPluginRunnerVersion: publicProcedure
+    .input(
+      z.object({
+        version: z.string().describe("The version of the swc_plugin_runner"),
+      })
+    )
+    .output(z.nullable(CompatRangeSchema))
+    .query(async ({ ctx, input: { version } }) => {
+      const v = await db.swcPluginRunnerVersion.findUnique({
+        where: {
+          version,
+        },
+        select: {
+          compatRange: {
+            select: {
+              id: true,
+              from: true,
+              to: true,
+            },
+          },
+        },
+      });
+
+      return v?.compatRange ?? null;
+    }),
+
   byVersion: publicProcedure
     .input(
       z.object({
         version: z.string(),
       })
     )
-    .output(
-      z.nullable(
-        z.object({
-          id: z.bigint(),
-          from: z.string(),
-          to: z.string(),
-        })
-      )
-    )
+    .output(z.nullable(CompatRangeSchema))
     .query(async ({ ctx, input: { version } }) => {
       // Try the cache first.
       {
