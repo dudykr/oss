@@ -1,3 +1,4 @@
+import { Dynamic } from "@/components/dynamic";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import { SessionProvider } from "next-auth/react";
@@ -30,7 +31,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
         <SessionProvider>
           <ClientProviders>
             <main className="flex h-screen w-full flex-col items-center justify-center align-middle">
-              {children}
+              <Dynamic>{children}</Dynamic>
             </main>
           </ClientProviders>
         </SessionProvider>
