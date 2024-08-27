@@ -114,7 +114,30 @@ export const compatRangeRouter = router({
       )
     )
     .query(async ({ ctx, input: { version } }) => {
-      const versions = await db.compatRange.findMany({
+      // Try the cache first.
+      {
+        const v = await db.swcCoreVersion.findUnique({
+          where: {
+            version,
+          },
+          select: {
+            compatRange: {
+              select: {
+                id: true,
+                from: true,
+                to: true,
+              },
+            },
+          },
+        });
+
+        if (v) {
+          return v.compatRange;
+        }
+      }
+
+      console.warn("Fallback to full search");
+      const compatRanges = await db.compatRange.findMany({
         select: {
           id: true,
           from: true,
@@ -122,7 +145,7 @@ export const compatRangeRouter = router({
         },
       });
 
-      for (const range of versions) {
+      for (const range of compatRanges) {
         if (
           semver.gte(version, range.from) &&
           (range.to === "*" || semver.lte(version, range.to))
