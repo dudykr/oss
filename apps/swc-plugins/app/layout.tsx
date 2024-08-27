@@ -28,7 +28,11 @@ export default function RootLayout({ children }: PropsWithChildren) {
         <NextTopLoader color={"var(--colors-primary)"} />
 
         <SessionProvider>
-          <ClientProviders>{children}</ClientProviders>
+          <ClientProviders>
+            <div className="flex h-screen flex-col items-center justify-center align-middle">
+              <main>{children}</main>
+            </div>
+          </ClientProviders>
         </SessionProvider>
         <Toaster />
       </body>
