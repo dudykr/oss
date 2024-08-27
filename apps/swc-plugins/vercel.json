@@ -9,6 +9,10 @@
     {
       "path": "/api/cron/update-host-runtimes",
       "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/cron/update-wasm-plugins",
+      "schedule": "0 0 * * *"
     }
   ]
 }
