@@ -198,12 +198,11 @@ model SwcPluginVersion {
 
 /// A mapping from the version of the `swc_plugin_runner` package to the version of `swc_core`.
 model SwcPluginRunnerVersion {
-  id             BigInt      @id @default(autoincrement())
+  id            BigInt      @id @default(autoincrement())
   /// The version of the (exact) `swc_plugin_runner` package.
-  version        String      @unique
-  swcCoreVersion String
-  compatRange    CompatRange @relation(fields: [compatRangeId], references: [id])
-  compatRangeId  BigInt
-  createdAt      DateTime    @default(now())
-  updatedAt      DateTime    @updatedAt
+  version       String      @unique
+  compatRange   CompatRange @relation(fields: [compatRangeId], references: [id])
+  compatRangeId BigInt
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 }
