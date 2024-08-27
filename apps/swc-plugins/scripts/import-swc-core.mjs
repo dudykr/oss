@@ -18,14 +18,28 @@ async function load(crate) {
   return content;
 }
 
-const [coreData, pluginRunnerData] = await Promise.all([
-  load("swc_core"),
-  load("swc_plugin_runner"),
-]);
+const [coreData, pluginRunnerData] = await Promise.all([load("swc_core")]);
+
+const requiredVersions = new Map();
 
 for (const line of coreData.split("\n")) {
-  const data = JSON.parse(line);
+  const data = JSON.parse(line.trim());
 
   const pluginRunner = data.deps.find((d) => d.name === "swc_plugin_runner");
-  console.log(pluginRunner);
+  if (pluginRunner) {
+    requiredVersions.set(data.vers, pluginRunner.req);
+  }
 }
+
+await fetch("http://localhost:50000/import/swc_core", {
+  method: "POST",
+  body: JSON.stringify({
+    pluginRunnerVersions: Array.from(requiredVersions.values()),
+    coreVersions: Array.from(requiredVersions.entries()).map(
+      ([version, req]) => ({
+        version,
+        pluginRunnerReq: req,
+      })
+    ),
+  }),
+});
