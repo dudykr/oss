@@ -21,12 +21,13 @@ export default function Page({
   const [includePrerelease, setIncludePrerelease] = useState(false);
   const [compatRange] = apiClient.compatRange.get.useSuspenseQuery({
     id: BigInt(compatRangeId),
+    includePrerelease,
   });
 
   return (
     <div>
       <div className="flex flex-row justify-between">
-        <h1 className="text-2xl font-bold">
+        <h1 className="mr-10 text-2xl font-bold">
           <kbd>swc_core</kbd>@<kbd>{compatRange.from}</kbd> -{" "}
           <kbd>{compatRange.to}</kbd>
         </h1>
@@ -34,7 +35,9 @@ export default function Page({
         <div>
           <Checkbox
             checked={includePrerelease}
-            onCheckedChange={(v) => setIncludePrerelease(v)}
+            onCheckedChange={(v) => {
+              setIncludePrerelease(!!v);
+            }}
           />
           <label>Include Prerelease</label>
         </div>
