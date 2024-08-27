@@ -5,14 +5,50 @@ import { z } from "zod";
 export const runtimeRouter = router({
   list: publicProcedure
     .input(z.void())
-    .output(z.array(z.string()))
+    .output(
+      z.array(
+        z.object({
+          id: z.bigint(),
+          name: z.string(),
+        })
+      )
+    )
     .query(async () => {
       const runtimes = await db.swcRuntime.findMany({
         select: {
+          id: true,
           name: true,
         },
       });
 
-      return runtimes.map((runtime) => runtime.name);
+      return runtimes;
+    }),
+
+  listVersions: publicProcedure
+    .input(
+      z.object({
+        runtimeId: z.bigint(),
+      })
+    )
+    .output(
+      z.array(
+        z.object({
+          version: z.string(),
+          compatRangeId: z.bigint(),
+        })
+      )
+    )
+    .query(async ({ input: { runtimeId } }) => {
+      const versions = await db.swcRuntimeVersion.findMany({
+        where: {
+          runtimeId,
+        },
+        select: {
+          version: true,
+          compatRangeId: true,
+        },
+      });
+
+      return versions;
     }),
 });
