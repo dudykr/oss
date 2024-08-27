@@ -122,7 +122,7 @@ export const compatRangeRouter = router({
       return v?.compatRange ?? null;
     }),
 
-  byVersion: publicProcedure
+  byCoreVersion: publicProcedure
     .input(
       z.object({
         version: z.string(),
@@ -237,6 +237,7 @@ export const compatRangeRouter = router({
                 },
                 update: {},
               });
+              console.log(`Imported swc_plugin_runner@${rv}`);
             }
           }
 
@@ -253,7 +254,7 @@ export const compatRangeRouter = router({
               pluginRunnerReq: corePkg.pluginRunnerReq,
             },
           });
-          console.log(`Imported ${corePkg.version}`);
+          console.log(`Imported swc_core@${corePkg.version}`);
         }
       }
     ),
