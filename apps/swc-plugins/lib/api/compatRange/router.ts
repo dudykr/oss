@@ -224,7 +224,7 @@ export const compatRangeRouter = router({
 
           if (semver.lt(corePkg.version, previousMaxCoreVersion)) {
             console.log(
-              `Skipping ${corePkg.version} as it's less than ${previousMaxCoreVersion}`
+              `Skipping ${corePkg.version} as it's less than previous max (${previousMaxCoreVersion})`
             );
             continue;
           }
@@ -244,7 +244,7 @@ export const compatRangeRouter = router({
             }
             if (semver.lt(rv, previousMaxPluginRunnerVersion)) {
               console.log(
-                `Skipping ${rv} as it's less than ${previousMaxPluginRunnerVersion}`
+                `Skipping ${rv} as it's less than previous max (${previousMaxPluginRunnerVersion})`
               );
               continue;
             }
