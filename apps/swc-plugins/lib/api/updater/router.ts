@@ -104,6 +104,7 @@ export const updaterRouter = router({
         },
       });
 
+      // Runtimes has so many versions so we need a faster logic.
       function byVersion(swcCoreVersion: string) {
         for (const range of compatRanges) {
           if (
