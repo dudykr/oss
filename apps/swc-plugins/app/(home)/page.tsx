@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { Dynamic } from "@/components/dynamic";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -21,36 +22,38 @@ export default function Home() {
 
   return (
     <div className="flex w-full max-w-md flex-col space-y-4">
-      <div className="flex space-x-4">
-        <Select onValueChange={(e) => setSelectedRuntime(BigInt(e))}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select runtime" />
-          </SelectTrigger>
-          <SelectContent>
-            {runtimes.map((runtime) => (
-              <SelectItem
-                key={runtime.id.toString()}
-                value={runtime.id.toString()}
-              >
-                {runtime.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+      <Dynamic>
+        <div className="flex space-x-4">
+          <Select onValueChange={(e) => setSelectedRuntime(BigInt(e))}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select runtime" />
+            </SelectTrigger>
+            <SelectContent>
+              {runtimes.map((runtime) => (
+                <SelectItem
+                  key={runtime.id.toString()}
+                  value={runtime.id.toString()}
+                >
+                  {runtime.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
 
-        {selectedRuntime && <VersionSelector runtimeId={selectedRuntime} />}
-      </div>
-      <div className="flex justify-center">
-        <Link href={`/versions/range`} passHref>
-          <Button
-            variant="secondary"
-            size="default"
-            className="whitespace-nowrap"
-          >
-            See all versions
-          </Button>
-        </Link>
-      </div>
+          {selectedRuntime && <VersionSelector runtimeId={selectedRuntime} />}
+        </div>
+        <div className="flex justify-center">
+          <Link href={`/versions/range`} passHref>
+            <Button
+              variant="secondary"
+              size="default"
+              className="whitespace-nowrap"
+            >
+              See all versions
+            </Button>
+          </Link>
+        </div>
+      </Dynamic>
     </div>
   );
 }
