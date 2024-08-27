@@ -18,7 +18,10 @@ async function load(crate) {
   return content;
 }
 
-const [coreData, pluginRunnerData] = await Promise.all([load("swc_core")]);
+const [coreData, pluginRunnerData] = await Promise.all([
+  load("swc_core"),
+  load("swc_plugin_runner"),
+]);
 
 const requiredVersions = new Map();
 
@@ -31,10 +34,16 @@ for (const line of coreData.split("\n")) {
   }
 }
 
+const pluginRunnerVersions = pluginRunnerData
+  .split("\n")
+  .map((line) => line.trim())
+  .map(JSON.parse)
+  .map((v) => v.vers);
+
 await fetch("http://localhost:50000/import/swc_core", {
   method: "POST",
   body: JSON.stringify({
-    pluginRunnerVersions: Array.from(requiredVersions.values()),
+    pluginRunnerVersions,
     coreVersions: Array.from(requiredVersions.entries())
       .map(([version, req]) => ({
         version,
