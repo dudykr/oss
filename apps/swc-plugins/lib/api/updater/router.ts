@@ -2,14 +2,9 @@ import { publicProcedure, router } from "@/lib/base";
 import { db } from "@/lib/prisma";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { createCaller } from "../server";
-
-if (!process.env.CRAWLER_SECRET) {
-  throw new Error("CRAWLER_SECRET is not set");
-}
 
 function validateToken(token: string) {
-  if (token === process.env.CRAWLER_SECRET) {
+  if (token === process.env.CRAWL_SECRET) {
     return;
   }
 
@@ -41,7 +36,7 @@ export const updaterRouter = router({
     .mutation(async ({ input, ctx }) => {
       validateToken(input.token);
 
-      const api = await createCaller(ctx);
+      const api = await (await import("@/lib/api/server")).createCaller(ctx);
 
       for (const pkg of input.pkgs) {
         const plugin = await db.swcPlugin.upsert({
