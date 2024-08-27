@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactNode, useEffect, useState } from "react";
 
 export const Dynamic = ({ children }: { children: ReactNode }) => {
