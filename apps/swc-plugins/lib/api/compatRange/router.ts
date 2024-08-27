@@ -194,6 +194,10 @@ export const compatRangeRouter = router({
           });
         }
 
+        const previousMaxCoreVersion = await maxSwcCoreVersion();
+        const previousMaxPluginRunnerVersion =
+          await maxSwcPluginRunnerVersion();
+
         const compatRanges = await db.compatRange.findMany({
           select: {
             id: true,
@@ -218,6 +222,10 @@ export const compatRangeRouter = router({
         for (const corePkg of coreVersions) {
           corePkg.version = corePkg.version.replace("v", "");
 
+          if (semver.lt(corePkg.version, previousMaxCoreVersion)) {
+            continue;
+          }
+
           const compatRange = byVersion(corePkg.version);
 
           if (!compatRange) {
@@ -229,6 +237,9 @@ export const compatRangeRouter = router({
             rv = rv.replace("v", "");
 
             if (done.has(rv)) {
+              continue;
+            }
+            if (semver.lt(rv, previousMaxPluginRunnerVersion)) {
               continue;
             }
 
@@ -299,4 +310,28 @@ function mergeVersion(min: string, max: string, newValue: string) {
   const maxVersion = semver.gt(max, newValue) ? max : newValue;
 
   return { min: minVersion, max: maxVersion };
+}
+
+async function maxSwcCoreVersion() {
+  const coreVersions = await db.swcCoreVersion.findMany({
+    select: {
+      version: true,
+    },
+  });
+
+  return coreVersions.reduce((max, core) => {
+    return semver.gt(max, core.version) ? max : core.version;
+  }, "0.0.0");
+}
+
+async function maxSwcPluginRunnerVersion() {
+  const pluginRunnerVersions = await db.swcPluginRunnerVersion.findMany({
+    select: {
+      version: true,
+    },
+  });
+
+  return pluginRunnerVersions.reduce((max, pluginRunner) => {
+    return semver.gt(max, pluginRunner.version) ? max : pluginRunner.version;
+  }, "0.0.0");
 }
