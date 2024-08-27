@@ -1,6 +1,7 @@
 import { publicProcedure, router } from "@/lib/base";
 import { db } from "@/lib/prisma";
 import { TRPCError } from "@trpc/server";
+import semver from "semver";
 import { z } from "zod";
 
 function validateToken(token: string) {
@@ -95,7 +96,24 @@ export const updaterRouter = router({
     .mutation(async ({ input, ctx }) => {
       validateToken(input.token);
 
-      const api = await (await import("@/lib/api/server")).createCaller(ctx);
+      const compatRanges = await db.compatRange.findMany({
+        select: {
+          id: true,
+          from: true,
+          to: true,
+        },
+      });
+
+      function byVersion(swcCoreVersion: string) {
+        for (const range of compatRanges) {
+          if (
+            semver.gte(swcCoreVersion, range.from) &&
+            (range.to === "*" || semver.lte(swcCoreVersion, range.to))
+          ) {
+            return range;
+          }
+        }
+      }
 
       for (const pkg of input.pkgs) {
         const runtime = await db.swcRuntime.upsert({
@@ -110,9 +128,7 @@ export const updaterRouter = router({
 
         for (const version of pkg.versions) {
           const swcCoreVersion = version.swcCoreVersion;
-          const compatRange = await api.compatRange.byCoreVersion({
-            version: swcCoreVersion,
-          });
+          const compatRange = byVersion(swcCoreVersion);
 
           if (!compatRange) {
             throw new TRPCError({
