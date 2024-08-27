@@ -35,11 +35,11 @@ await fetch("http://localhost:50000/import/swc_core", {
   method: "POST",
   body: JSON.stringify({
     pluginRunnerVersions: Array.from(requiredVersions.values()),
-    coreVersions: Array.from(requiredVersions.entries()).map(
-      ([version, req]) => ({
+    coreVersions: Array.from(requiredVersions.entries())
+      .map(([version, req]) => ({
         version,
         pluginRunnerReq: req,
-      })
-    ),
+      }))
+      .reverse(),
   }),
 });
