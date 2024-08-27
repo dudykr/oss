@@ -73,9 +73,11 @@ export const updaterRouter = router({
               pluginId: plugin.id,
               version: version.version,
               compatRangeId: compatRange.id,
+              swcCoreVersion,
             },
             update: {
               compatRangeId: compatRange.id,
+              swcCoreVersion,
             },
           });
         }
