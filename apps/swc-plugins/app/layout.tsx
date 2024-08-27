@@ -29,9 +29,9 @@ export default function RootLayout({ children }: PropsWithChildren) {
 
         <SessionProvider>
           <ClientProviders>
-            <div className="flex h-screen flex-col items-center justify-center align-middle">
-              <main>{children}</main>
-            </div>
+            <main className="flex h-screen w-full flex-col items-center justify-center align-middle">
+              {children}
+            </main>
           </ClientProviders>
         </SessionProvider>
         <Toaster />
