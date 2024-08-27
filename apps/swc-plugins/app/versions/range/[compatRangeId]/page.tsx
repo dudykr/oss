@@ -27,9 +27,11 @@ export default function Page({
   return (
     <div>
       <div className="flex flex-row justify-between">
-        <h1 className="mr-10 text-2xl font-bold">
-          <kbd>swc_core</kbd>@<kbd>{compatRange.from}</kbd> -{" "}
-          <kbd>{compatRange.to}</kbd>
+        <h1 className="mr-10 flex flex-col text-2xl font-bold">
+          <kbd>swc_core</kbd>
+          <span className="text-sm">
+            @<kbd>{compatRange.from}</kbd> - <kbd>{compatRange.to}</kbd>
+          </span>
         </h1>
 
         <div>
