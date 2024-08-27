@@ -29,14 +29,14 @@ const NpmPackageSchema = z.object({
   versions: z.array(NpmPackageVersionSchema),
 });
 
+export const UpdateWasmPluginsInputSchema = z.object({
+  token: z.string(),
+  pkgs: z.array(NpmPackageSchema),
+});
+
 export const updaterRouter = router({
   updateWasmPlugins: publicProcedure
-    .input(
-      z.object({
-        token: z.string(),
-        pkgs: z.array(NpmPackageSchema),
-      })
-    )
+    .input(UpdateWasmPluginsInputSchema)
     .output(z.void())
     .mutation(async ({ input, ctx }) => {
       validateToken(input.token);
