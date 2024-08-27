@@ -202,6 +202,8 @@ export const compatRangeRouter = router({
           },
         });
 
+        const done = new Set<string>();
+
         function byVersion(swcCoreVersion: string) {
           for (const range of compatRanges) {
             if (
@@ -226,6 +228,10 @@ export const compatRangeRouter = router({
           for (let rv of pluginRunnerVersions) {
             rv = rv.replace("v", "");
 
+            if (done.has(rv)) {
+              continue;
+            }
+
             if (semver.satisfies(rv, corePkg.pluginRunnerReq)) {
               await db.swcPluginRunnerVersion.upsert({
                 where: {
@@ -240,6 +246,7 @@ export const compatRangeRouter = router({
                 },
               });
               console.log(`Imported swc_plugin_runner@${rv}`);
+              done.add(rv);
             }
           }
 
