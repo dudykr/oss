@@ -1,12 +1,19 @@
+import { createCaller } from "@/lib/server";
+import { redirect } from "next/navigation";
+
 export default async function Page({
   params: { version },
 }: {
   params: { version: string };
 }) {
-  // TODO: Reverse mapping from plugin runner version to swc version
-  return (
-    <div>
-      <h1>swc_plugin_runner: {version}</h1>
-    </div>
-  );
+  const api = await createCaller();
+  const compatRange = await api.compatRange.byPluginRunnerVersion({
+    version,
+  });
+
+  if (compatRange) {
+    return redirect(`/compat/range/${compatRange.id}`);
+  }
+
+  return <div>No compat range found for swc_plugin_runner@{version}</div>;
 }
