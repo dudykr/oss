@@ -1,5 +1,6 @@
 "use client";
 
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Table,
   TableBody,
@@ -10,22 +11,34 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { apiClient } from "@/lib/trpc/web-client";
+import { useState } from "react";
 
 export default function Page({
   params: { compatRangeId },
 }: {
   params: { compatRangeId: string };
 }) {
+  const [includePrerelease, setIncludePrerelease] = useState(false);
   const [compatRange] = apiClient.compatRange.get.useSuspenseQuery({
     id: BigInt(compatRangeId),
   });
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">
-        <kbd>swc_core</kbd>@<kbd>{compatRange.from}</kbd> -{" "}
-        <kbd>{compatRange.to}</kbd>
-      </h1>
+      <div className="flex flex-row justify-between">
+        <h1 className="text-2xl font-bold">
+          <kbd>swc_core</kbd>@<kbd>{compatRange.from}</kbd> -{" "}
+          <kbd>{compatRange.to}</kbd>
+        </h1>
+
+        <div>
+          <Checkbox
+            checked={includePrerelease}
+            onCheckedChange={(v) => setIncludePrerelease(v)}
+          />
+          <label>Include Prerelease</label>
+        </div>
+      </div>
 
       <Table>
         <TableCaption>Runtime Version Ranges</TableCaption>
