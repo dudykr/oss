@@ -1,8 +1,14 @@
 import { Logo } from "@/components/logo";
 import { RuntimeVersionSelector } from "@/components/runtime-version-selector";
 import { Button } from "@/components/ui/button";
+import { Metadata } from "next";
 import Link from "next/link";
 import { FC } from "react";
+
+export const metadata: Metadata = {
+  title: "SWC Plugins",
+  description: "A collection of SWC plugins, ready to use in your project.",
+};
 
 const Home: FC = () => (
   <main className="flex h-screen w-full flex-col items-center justify-center align-middle">
