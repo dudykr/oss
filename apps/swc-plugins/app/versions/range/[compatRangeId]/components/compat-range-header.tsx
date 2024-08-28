@@ -1,3 +1,5 @@
+"use client";
+
 import { Checkbox } from "@/components/ui/checkbox";
 import { apiClient } from "@/lib/trpc/web-client";
 import { parseAsBoolean, useQueryState } from "next-usequerystate";

@@ -1,3 +1,5 @@
+"use client";
+
 import { TableContainer } from "@/components/table-container";
 import {
   Table,
