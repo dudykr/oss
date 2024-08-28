@@ -5,7 +5,6 @@ import { useCommandState } from "cmdk";
 import { CheckIcon, ChevronsUpDown, PlusIcon } from "lucide-react";
 import type { ComponentProps, FC, ReactNode } from "react";
 import { useCallback, useId, useState } from "react";
-import { Virtuoso } from "react-virtuoso";
 import { cn } from "../lib/utils";
 import { Button } from "./ui/button";
 import {
@@ -96,32 +95,6 @@ export const Select: FC<SelectProperties> = ({
     onCreate?.(newValue);
   };
 
-  const VirtuosoItem = useCallback(
-    (_index: number, item: typeof data[number]) => {
-      const active = Array.isArray(value)
-        ? value.includes(item.value)
-        : value === item.value;
-
-      return (
-        <CommandItem
-          key={item.value}
-          value={item.value}
-          onSelect={() => handleSelect(item.value)}
-          className="flex items-center gap-2"
-        >
-          <div className="flex-1 truncate text-left">
-            {renderItem ? renderItem(item) : item.label}
-          </div>
-          <CheckIcon
-            size={16}
-            className={cn("shrink-0", active ? "opacity-100" : "opacity-0")}
-          />
-        </CommandItem>
-      );
-    },
-    [value, renderItem, handleSelect]
-  );
-
   return (
     <Popover
       {...properties}
@@ -170,7 +143,7 @@ export const Select: FC<SelectProperties> = ({
       >
         <Command>
           <CommandInput placeholder={`Search for a ${type}...`} />
-          <CommandList>
+          <CommandList className="max-h-[200px]">
             {onCreate ? (
               <CommandEmpty>
                 <CreateEmptyState onCreate={handleCreate} />
@@ -179,12 +152,31 @@ export const Select: FC<SelectProperties> = ({
               <CommandEmpty>No results found.</CommandEmpty>
             )}
             <CommandGroup>
-              <Virtuoso
-                data={data}
-                style={{ height: "150px" }}
-                totalCount={data.length}
-                itemContent={VirtuosoItem}
-              />
+              {data.map((item) => {
+                const active = Array.isArray(value)
+                  ? value.includes(item.value)
+                  : value === item.value;
+
+                return (
+                  <CommandItem
+                    key={item.value}
+                    value={item.value}
+                    onSelect={() => handleSelect(item.value)}
+                    className="flex items-center gap-2"
+                  >
+                    <div className="flex-1 truncate text-left">
+                      {renderItem ? renderItem(item) : item.label}
+                    </div>
+                    <CheckIcon
+                      size={16}
+                      className={cn(
+                        "shrink-0",
+                        active ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                  </CommandItem>
+                );
+              })}
             </CommandGroup>
           </CommandList>
         </Command>
