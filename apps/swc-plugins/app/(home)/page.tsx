@@ -1,16 +1,30 @@
 "use client";
 
-import { useState } from "react";
-
 import { Select } from "@/components/select";
 import { Button } from "@/components/ui/button";
 import { apiClient } from "@/lib/trpc/web-client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { FC, useState } from "react";
 
-export default function Home() {
+const Home: FC = () => {
   const [runtimes] = apiClient.runtime.list.useSuspenseQuery();
   const [selectedRuntime, setSelectedRuntime] = useState<bigint>();
+  const [selectedVersion, setSelectedVersion] = useState<string>();
+  const router = useRouter();
+  const versions = apiClient.runtime.listVersions.useQuery({
+    runtimeId: selectedRuntime ?? BigInt(0),
+  });
+
+  const handleRuntimeChange = (runtimeId: string) => {
+    setSelectedRuntime(BigInt(runtimeId));
+  };
+
+  const handleVersionChange = (version: string) => {
+    const selected = versions.data?.find((v) => v.version === version);
+    setSelectedVersion(version);
+    router.push(`/versions/range/${selected?.compatRangeId}`);
+  };
 
   return (
     <div className="flex w-full max-w-md flex-col space-y-4">
@@ -21,12 +35,19 @@ export default function Home() {
             value: runtime.id.toString(),
             label: runtime.name,
           }))}
-          onChange={(e) => setSelectedRuntime(BigInt(e))}
+          onChange={handleRuntimeChange}
         />
 
-        <VersionSelector
-          runtimeId={selectedRuntime}
+        <Select
+          value={selectedVersion}
+          onChange={handleVersionChange}
           disabled={!selectedRuntime}
+          data={
+            versions.data?.map((version) => ({
+              value: version.version,
+              label: version.version,
+            })) ?? []
+          }
         />
       </div>
       <div className="flex justify-center">
@@ -42,38 +63,6 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
 
-function VersionSelector({
-  runtimeId,
-  disabled,
-}: {
-  runtimeId: bigint;
-  disabled: boolean;
-}) {
-  const router = useRouter();
-  const versions = apiClient.runtime.listVersions.useQuery({
-    runtimeId,
-  });
-  const [selectedVersion, setSelectedVersion] = useState<string>();
-
-  const handleVersionChange = (version: string) => {
-    const selected = versions.data?.find((v) => v.version === version);
-    setSelectedVersion(version);
-    router.push(`/versions/range/${selected?.compatRangeId}`);
-  };
-
-  return (
-    <Select
-      value={selectedVersion}
-      onChange={handleVersionChange}
-      disabled={disabled}
-      data={
-        versions.data?.map((version) => ({
-          value: version.version,
-          label: version.version,
-        })) ?? []
-      }
-    />
-  );
-}
+export default Home;
