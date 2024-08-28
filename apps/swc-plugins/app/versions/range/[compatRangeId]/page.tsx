@@ -1,10 +1,10 @@
 "use client";
 
+import { TableContainer } from "@/components/table-container";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -25,16 +25,17 @@ export default function Page({
   });
 
   return (
-    <div>
+    <div className="grid gap-6">
       <div className="flex flex-row justify-between">
-        <h1 className="mr-10 flex flex-col text-2xl font-bold">
-          <kbd>swc_core</kbd>
+        <h1 className="mr-10 flex flex-col font-mono text-2xl font-bold">
+          <p>swc_core</p>
           <span className="text-sm">
-            @<kbd>{compatRange.from}</kbd> - <kbd>{compatRange.to}</kbd>
+            @<span className="font-mono">{compatRange.from}</span> -{" "}
+            <span className="font-mono">{compatRange.to}</span>
           </span>
         </h1>
 
-        <div>
+        <div className="flex flex-row items-center gap-2 text-sm font-medium">
           <Checkbox
             checked={includePrerelease}
             onCheckedChange={(v) => {
@@ -45,47 +46,51 @@ export default function Page({
         </div>
       </div>
 
-      <Table>
-        <TableCaption>Runtime Version Ranges</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[200px]">Runtime</TableHead>
-            <TableHead>Minimum Version</TableHead>
-            <TableHead>Maximum Version</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {compatRange.runtimes.map((runtime) => (
-            <TableRow key={runtime.name}>
-              <TableCell className="font-medium">{runtime.name}</TableCell>
-              <TableCell>{runtime.minVersion}</TableCell>
-              <TableCell>{runtime.maxVersion}</TableCell>
+      <TableContainer title="Runtime Version Ranges">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Runtime</TableHead>
+              <TableHead className="w-[200px]">Minimum Version</TableHead>
+              <TableHead className="w-[200px]">Maximum Version</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {compatRange.runtimes.map((runtime) => (
+              <TableRow key={runtime.name}>
+                <TableCell className="font-medium">{runtime.name}</TableCell>
+                <TableCell className="w-[200px]">
+                  {runtime.minVersion}
+                </TableCell>
+                <TableCell className="w-[200px]">
+                  {runtime.maxVersion}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
 
-      <h2 className="text-xl font-bold">Plugins</h2>
-
-      <Table>
-        <TableCaption>Compatible Plugins</TableCaption>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="w-[200px]">Plugin</TableHead>
-            <TableHead>Minimum Version</TableHead>
-            <TableHead>Maximum Version</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {compatRange.plugins.map((plugin) => (
-            <TableRow key={plugin.name}>
-              <TableCell className="font-medium">{plugin.name}</TableCell>
-              <TableCell>{plugin.minVersion}</TableCell>
-              <TableCell>{plugin.maxVersion}</TableCell>
+      <TableContainer title="Compatible Plugins">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Plugin</TableHead>
+              <TableHead className="w-[200px]">Minimum Version</TableHead>
+              <TableHead className="w-[200px]">Maximum Version</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {compatRange.plugins.map((plugin) => (
+              <TableRow key={plugin.name}>
+                <TableCell className="font-medium">{plugin.name}</TableCell>
+                <TableCell className="w-[200px]">{plugin.minVersion}</TableCell>
+                <TableCell className="w-[200px]">{plugin.maxVersion}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 }
