@@ -9,10 +9,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { CompatRange } from "@/lib/prisma";
 import { useRouter } from "next/navigation";
 
-export const RangeTable = ({ ranges }: { ranges: CompatRange[] }) => {
+type RangeTableProps = {
+  ranges: { id: bigint; from: string; to: string }[];
+};
+
+export const RangeTable = ({ ranges }: RangeTableProps) => {
   const router = useRouter();
 
   const handleClick = (id: bigint) => {
