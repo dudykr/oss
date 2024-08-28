@@ -3,9 +3,12 @@
 import { Select } from "@/components/select";
 import { Button } from "@/components/ui/button";
 import { apiClient } from "@/lib/trpc/web-client";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FC, useState } from "react";
+
+import SWCLogo from "./swc.svg";
 
 const Home: FC = () => {
   const [runtimes] = apiClient.runtime.list.useSuspenseQuery();
@@ -27,9 +30,17 @@ const Home: FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <h1 className="text-2xl font-bold">SWC Plugins</h1>
-      <div className="flex items-center gap-2">
+    <div className="flex flex-col items-center gap-8">
+      <Image src={SWCLogo} alt="SWC Logo" width={80} height={28} />
+      <div className="flex flex-col gap-2">
+        <h1 className="max-w-[330px] text-center text-3xl font-bold leading-tight tracking-tighter md:min-w-[540px] md:text-4xl lg:leading-[1.1]">
+          SWC Plugins
+        </h1>
+        <p className="text-muted-foreground max-w-[750px] text-center text-lg">
+          A collection of SWC plugins, ready to use in your project.
+        </p>
+      </div>
+      <div className="flex w-full items-center gap-2">
         <Select
           value={selectedRuntime?.toString()}
           data={runtimes.map((runtime) => ({
