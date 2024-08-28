@@ -1,73 +1,25 @@
-"use client";
-
-import { Select } from "@/components/select";
+import { Logo } from "@/components/logo";
+import { RuntimeVersionSelector } from "@/components/runtime-version-selector";
 import { Button } from "@/components/ui/button";
-import { apiClient } from "@/lib/trpc/web-client";
-import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { FC, useState } from "react";
+import { FC } from "react";
 
-import SWCLogo from "./swc.svg";
-
-const Home: FC = () => {
-  const [runtimes] = apiClient.runtime.list.useSuspenseQuery();
-  const [selectedRuntime, setSelectedRuntime] = useState<bigint>();
-  const [selectedVersion, setSelectedVersion] = useState<string>();
-  const router = useRouter();
-  const versions = apiClient.runtime.listVersions.useQuery({
-    runtimeId: selectedRuntime ?? BigInt(0),
-  });
-
-  const handleRuntimeChange = (runtimeId: string) => {
-    setSelectedRuntime(BigInt(runtimeId));
-  };
-
-  const handleVersionChange = (version: string) => {
-    const selected = versions.data?.find((v) => v.version === version);
-    setSelectedVersion(version);
-    router.push(`/versions/range/${selected?.compatRangeId}`);
-  };
-
-  return (
-    <div className="flex flex-col items-center gap-8">
-      <Image src={SWCLogo} alt="SWC Logo" width={80} height={28} />
-      <div className="flex flex-col gap-2">
-        <h1 className="max-w-[330px] text-center text-3xl font-bold leading-tight tracking-tighter md:min-w-[540px] md:text-4xl lg:leading-[1.1]">
-          SWC Plugins
-        </h1>
-        <p className="text-muted-foreground max-w-[750px] text-center text-lg">
-          A collection of SWC plugins, ready to use in your project.
-        </p>
-      </div>
-      <div className="flex w-full items-center gap-2">
-        <Select
-          value={selectedRuntime?.toString()}
-          data={runtimes.map((runtime) => ({
-            value: runtime.id.toString(),
-            label: runtime.name,
-          }))}
-          onChange={handleRuntimeChange}
-          type="runtime"
-        />
-        <Select
-          value={selectedVersion}
-          onChange={handleVersionChange}
-          disabled={!selectedRuntime}
-          data={
-            versions.data?.map((version) => ({
-              value: version.version,
-              label: version.version,
-            })) ?? []
-          }
-          type="version"
-        />
-      </div>
-      <Button variant="link" asChild>
-        <Link href="/versions/range">or see all versions</Link>
-      </Button>
+const Home: FC = () => (
+  <div className="flex flex-col items-center gap-8">
+    <Logo />
+    <div className="flex flex-col gap-2">
+      <h1 className="max-w-[330px] text-center text-3xl font-bold leading-tight tracking-tighter md:min-w-[540px] md:text-4xl lg:leading-[1.1]">
+        SWC Plugins
+      </h1>
+      <p className="text-muted-foreground max-w-[750px] text-center text-lg">
+        A collection of SWC plugins, ready to use in your project.
+      </p>
     </div>
-  );
-};
+    <RuntimeVersionSelector />
+    <Button variant="link" asChild>
+      <Link href="/versions/range">or see all versions</Link>
+    </Button>
+  </div>
+);
 
 export default Home;
