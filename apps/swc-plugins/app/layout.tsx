@@ -30,9 +30,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 
         <SessionProvider>
           <ClientProviders>
-            <main className="flex h-screen w-full flex-col items-center justify-center align-middle">
-              <Dynamic>{children}</Dynamic>
-            </main>
+            <Dynamic>{children}</Dynamic>
           </ClientProviders>
         </SessionProvider>
         <Toaster />
