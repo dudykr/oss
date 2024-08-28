@@ -27,8 +27,8 @@ const Home: FC = () => {
   };
 
   return (
-    <div className="flex w-full max-w-md flex-col space-y-4">
-      <div className="flex space-x-4">
+    <div className="flex flex-col items-center gap-4">
+      <div className="flex items-center gap-4">
         <Select
           value={selectedRuntime?.toString()}
           data={runtimes.map((runtime) => ({
@@ -36,8 +36,8 @@ const Home: FC = () => {
             label: runtime.name,
           }))}
           onChange={handleRuntimeChange}
+          type="runtime"
         />
-
         <Select
           value={selectedVersion}
           onChange={handleVersionChange}
@@ -48,19 +48,12 @@ const Home: FC = () => {
               label: version.version,
             })) ?? []
           }
+          type="version"
         />
       </div>
-      <div className="flex justify-center">
-        <Link href={`/versions/range`} passHref>
-          <Button
-            variant="secondary"
-            size="default"
-            className="whitespace-nowrap"
-          >
-            See all versions
-          </Button>
-        </Link>
-      </div>
+      <Button variant="link" asChild>
+        <Link href="/versions/range">or see all versions</Link>
+      </Button>
     </div>
   );
 };
