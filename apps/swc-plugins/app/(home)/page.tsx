@@ -28,7 +28,8 @@ const Home: FC = () => {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <div className="flex items-center gap-4">
+      <h1 className="text-2xl font-bold">SWC Plugins</h1>
+      <div className="flex items-center gap-2">
         <Select
           value={selectedRuntime?.toString()}
           data={runtimes.map((runtime) => ({
