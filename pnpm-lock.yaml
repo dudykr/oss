@@ -125,6 +125,9 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.0.7
         version: 1.0.7(@types/react-dom@18.2.18)(@types/react@18.3.3)(react-dom@18.2.0)(react@18.2.0)
+      '@react-hookz/web':
+        specifier: ^24.0.4
+        version: 24.0.4(react-dom@18.2.0)(react@18.2.0)
       '@simplewebauthn/browser':
         specifier: 9.0.1
         version: 9.0.1
@@ -182,6 +185,9 @@ importers:
       next-themes:
         specifier: ^0.2.1
         version: 0.2.1(next@14.2.4)(react-dom@18.2.0)(react@18.2.0)
+      next-usequerystate:
+        specifier: ^1.17.8
+        version: 1.17.8(next@14.2.4)
       nextjs-toploader:
         specifier: ^1.6.4
         version: 1.6.4(next@14.2.4)(react-dom@18.2.0)(react@18.2.0)
@@ -203,6 +209,9 @@ importers:
       react-resizable-panels:
         specifier: ^2.1.1
         version: 2.1.1(react-dom@18.2.0)(react@18.2.0)
+      react-virtuoso:
+        specifier: ^4.10.1
+        version: 4.10.1(react-dom@18.2.0)(react@18.2.0)
       recharts:
         specifier: ^2.12.7
         version: 2.12.7(react-dom@18.2.0)(react@18.2.0)
@@ -3639,6 +3648,26 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
       tiny-warning: 1.0.3
       tslib: 2.6.2
+    dev: false
+
+  /@react-hookz/deep-equal@1.0.4:
+    resolution: {integrity: sha512-N56fTrAPUDz/R423pag+n6TXWbvlBZDtTehaGFjK0InmN+V2OFWLE/WmORhmn6Ce7dlwH5+tQN1LJFw3ngTJVg==}
+    dev: false
+
+  /@react-hookz/web@24.0.4(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-DcIM6JiZklDyHF6CRD1FTXzuggAkQ+3Ncq2Wln7Kdih8GV6ZIeN9JfS6ZaQxpQUxan8/4n0J2V/R7nMeiSrb2Q==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      js-cookie: ^3.0.5
+      react: ^16.8 || ^17 || ^18
+      react-dom: ^16.8 || ^17 || ^18
+    peerDependenciesMeta:
+      js-cookie:
+        optional: true
+    dependencies:
+      '@react-hookz/deep-equal': 1.0.4
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@rushstack/eslint-patch@1.0.8:
@@ -8270,6 +8299,10 @@ packages:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
     dev: true
 
+  /mitt@3.0.1:
+    resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
+    dev: false
+
   /mixme@0.5.9:
     resolution: {integrity: sha512-VC5fg6ySUscaWUpI4gxCBTQMH2RdUpNrk+MsbpCYtIvf9SBJdiUey4qE7BXviJsJR4nDQxCZ+3yaYNW3guz/Pw==}
     engines: {node: '>= 8.0.0'}
@@ -8364,6 +8397,15 @@ packages:
       next: 14.2.4(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /next-usequerystate@1.17.8(next@14.2.4):
+    resolution: {integrity: sha512-9lwrnqFRafi2KGmt9TgnlFP4w0rNSsVtAf+2ufyj/KgQZDv+fIQAGZSCZkmkU1f1Q4tsKvnG94h3prK88mP2sA==}
+    peerDependencies:
+      next: '>=13.4 <14.0.2 || ^14.0.3'
+    dependencies:
+      mitt: 3.0.1
+      next: 14.2.4(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /next@14.1.0(react-dom@18.2.0)(react@18.2.0):
@@ -9283,6 +9325,17 @@ packages:
       dom-helpers: 5.2.1
       loose-envify: 1.4.0
       prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /react-virtuoso@4.10.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-vDBt9AarmCjPNshw3VxPXW355ZQKSO0p9vrAJ0pi04TB6aXk+qHWTu8NuaQ3ppcd/Ub1r5ryRA4fJ2QGuH0H0g==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16 || >=17 || >= 18'
+      react-dom: '>=16 || >=17 || >= 18'
+    dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
