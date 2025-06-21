@@ -27,7 +27,7 @@ type PlanType = "pro" | "max5" | "max20" | "custom_max";
 
 async function runCcusage(): Promise<CcusageData | null> {
   try {
-    const result = await execa("npx", ["ccusage", "blocks", "--json"]);
+    const result = await execa("npx", ["-y", "ccusage", "blocks", "--json"]);
     return JSON.parse(result.stdout);
   } catch (error) {
     console.error("Error running ccusage:", error);
