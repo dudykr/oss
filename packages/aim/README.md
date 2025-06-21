@@ -1,23 +1,13 @@
-# Rslib project
+# aim: AI Usage Monitor
 
-## Setup
+Port of `ccusage_monitor` to TypeScript, just because I think the node package manager makes using it easier.
 
-Install the dependencies:
-
-```bash
-pnpm install
-```
-
-## Get started
-
-Build the library:
+## Usage
 
 ```bash
-pnpm build
-```
+# Via npx
+npx @dudykr/aim
 
-Build the library in watch mode:
-
-```bash
-pnpm dev
+# Via pnpm
+pnpm dlx @dudykr/aim
 ```
