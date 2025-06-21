@@ -419,10 +419,8 @@ process.on("SIGINT", () => {
   process.exit(0);
 });
 
-if (import.meta.url === `file://${process.argv[1]}`) {
-  main().catch((error) => {
-    process.stdout.write("\x1b[?25h"); // Show cursor on error
-    console.error("Error:", error);
-    process.exit(1);
-  });
-}
+main().catch((error) => {
+  process.stdout.write("\x1b[?25h"); // Show cursor on error
+  console.error("Error:", error);
+  process.exit(1);
+});
