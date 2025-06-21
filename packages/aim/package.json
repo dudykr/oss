@@ -16,6 +16,7 @@
     "dist"
   ],
   "scripts": {
+    "prepack": "pnpm build",
     "build": "rslib build",
     "check": "biome check --write",
     "dev": "rslib build --watch",
