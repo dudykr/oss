@@ -1,12 +1,30 @@
 {
   "name": "@dudykr/aim",
-  "version": "0.1.0",
-  "description": "AI Usage Monitor",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
   },
-  "keywords": [],
-  "author": "Donny <kdy.1997.dev@gmail.com>",
-  "license": "Apache-2.0"
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "check": "biome check --write",
+    "dev": "rslib build --watch",
+    "format": "biome format --write",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@rslib/core": "^0.10.2",
+    "@types/node": "^22.15.32",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  },
+  "private": true
 }
